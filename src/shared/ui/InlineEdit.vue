@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, shallowRef, ref } from "vue";
-import { useClickOutside } from "../composables/useClickOutside";
+import { useClickOutside } from "@/shared/lib/useClickOutside";
 
 interface Props {
   id: string;

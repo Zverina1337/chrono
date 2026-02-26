@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
-import { ITask, ITaskActions } from "../types/types";
+import { ITask, ITaskActions } from "./types";
 
 export const useTaskStore = defineStore("task", () => {
   const tasks = ref(new Map<string, ITask[]>());

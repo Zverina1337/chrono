@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { Ref, ref } from "vue";
-import { ISection, ISectionActions } from "../types/types";
+import { ISection, ISectionActions } from "./types";
 
 export const useSectionStore = defineStore("section", () => {
   const sections: Ref<Array<ISection>> = ref([

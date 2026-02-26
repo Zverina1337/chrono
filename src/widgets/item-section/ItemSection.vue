@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { ISection, ISectionActions, ITaskActions } from "../types/types";
+import { ISection, ISectionActions } from "@/entities/section/model/types";
+import { ITaskActions } from "@/entities/task/model/types";
 import { computed } from "vue";
-import Button from "./Button.vue";
-import InlineEdit from "./InlineEdit.vue";
+import Button from "@/shared/ui/Button.vue";
+import InlineEdit from "@/shared/ui/InlineEdit.vue";
 
 interface Props {
   section: ISection;

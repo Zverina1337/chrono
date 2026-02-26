@@ -1,13 +1,12 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
-import { useSectionStore } from "../stores/section";
-import { useTaskStore } from "../stores/task";
-import { ISection } from "../types/types";
-import ListSection from "../components/ListSection.vue";
+import { useSectionStore } from "@/entities/section/model/section";
+import { useTaskStore } from "@/entities/task/model/task";
+import ListSection from "@/widgets/list-section/ListSection.vue";
 
 const sectionStore = useSectionStore();
 const taskStore = useTaskStore();
-const { getTasks, addTask } = taskStore;
+const { addTask } = taskStore;
 const { sections } = storeToRefs(sectionStore);
 const { addSection, removeSection, editSection } = sectionStore;
 </script>

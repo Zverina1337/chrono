@@ -1,34 +1,26 @@
 <script setup lang="ts">
-import { ISection, ISectionActions } from "@/entities/section/model/types";
-import { ITaskActions } from "@/entities/task/model/types";
 import { computed } from "vue";
+import { ISection } from "@/entities/section/model/types";
+import { useSectionStore } from "@/entities/section/model/section";
+import { useTaskStore } from "@/entities/task/model/task";
 import Button from "@/shared/ui/Button.vue";
 import InlineEdit from "@/shared/ui/InlineEdit.vue";
 
 interface Props {
   section: ISection;
 }
-interface Emits {
-  editSection: Parameters<ISectionActions["editSection"]>;
-  addTask: Parameters<ITaskActions["addTask"]>;
-  removeSection: Parameters<ISectionActions["removeSection"]>;
-}
-const props = defineProps<Props>();
-const emits = defineEmits<Emits>();
 
-const handleAddTask: ITaskActions["addTask"] = (sectionUuid, data) => {
-  emits("addTask", sectionUuid, { ...data });
-};
-const handleRemoveSection: ISectionActions["removeSection"] = (uuid) => {
-  emits("removeSection", uuid);
-};
-const handleEditSection: ISectionActions["editSection"] = (uuid, data) => {
-  emits("editSection", uuid, data);
-};
+const props = defineProps<Props>();
+
 const sectionName = computed({
   get: () => props.section.name,
-  set: (value) => handleEditSection(props.section.uuid, { name: value }),
+  set: (value) => editSection(props.section.uuid, { name: value }),
 });
+
+const sectionStore = useSectionStore();
+const taskStore = useTaskStore();
+const { removeSection, editSection } = sectionStore;
+const { addTask } = taskStore;
 </script>
 
 <template>
@@ -41,13 +33,13 @@ const sectionName = computed({
       </InlineEdit>
       <Button
         class="rounded-full i-material-symbols-light:cancel-outline text-2xl bg-white"
-        @click="handleRemoveSection(section.uuid)"
+        @click="removeSection(section.uuid)"
       />
     </div>
     <Button
       class="px-2 py-1"
       @click="
-        handleAddTask(section.uuid, {
+        addTask(section.uuid, {
           name: 'task-name',
           description: 'task-description',
         })

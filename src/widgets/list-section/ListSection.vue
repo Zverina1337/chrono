@@ -1,34 +1,11 @@
 <script setup lang="ts">
-import { ISection, ISectionActions } from "@/entities/section/model/types";
-import { ITaskActions } from "@/entities/task/model/types";
-import Button from "@/shared/ui/Button.vue";
 import ItemSection from "@/widgets/item-section/ItemSection.vue";
+import { storeToRefs } from "pinia";
+import { useSectionStore } from "@/entities/section/model/section";
 
-interface Props {
-  sections: ISection[];
-}
-interface Emits {
-  addSection: Parameters<ISectionActions["addSection"]>;
-  editSection: Parameters<ISectionActions["editSection"]>;
-  addTask: Parameters<ITaskActions["addTask"]>;
-  removeSection: Parameters<ISectionActions["removeSection"]>;
-}
+const sectionStore = useSectionStore();
 
-const props = defineProps<Props>();
-const emits = defineEmits<Emits>();
-
-const handleAddSection: ISectionActions["addSection"] = (name: ISection["name"]) => {
-  emits("addSection", name);
-};
-const handleEditSection: ISectionActions["editSection"] = (uuid, data) => {
-  emits("editSection", uuid, data);
-};
-const handleRemoveSection: ISectionActions["removeSection"] = (uuid) => {
-  emits("removeSection", uuid);
-};
-const handleAddTask: ITaskActions["addTask"] = (sectionUuid, data) => {
-  emits("addTask", sectionUuid, data);
-};
+const { sections } = storeToRefs(sectionStore);
 </script>
 <template>
   <section v-if="sections.length !== 0" class="w-full" flex="~ gap-2">
@@ -37,23 +14,10 @@ const handleAddTask: ITaskActions["addTask"] = (sectionUuid, data) => {
       class="w-full h-full rounded bg-gray-700 p-5"
       flex="~ col gap-4"
     >
-      <ItemSection
-        :key="section.uuid"
-        :section
-        @edit-section="handleEditSection"
-        @remove-section="handleRemoveSection"
-        @add-task="handleAddTask"
-      />
+      <ItemSection :key="section.uuid" :section />
     </div>
   </section>
-  <section
-    v-if="sections.length === 0"
-    class="h-full w-full"
-    flex="~ col items-center justify-center gap-4"
-  >
-    <h3 class="text-2xl text-white">У вас нет секций. Добавить?</h3>
-    <Button class="px-4 py-2 font-medium" @click="handleAddSection">Добавить секцию</Button>
-    <!-- <h3>У вас еще нет задач в этой секции. Добавить?</h3>
-    <Button class="px-2 py-1 font-medium" @click="handleAddTask"> Добавить задачу </Button> -->
+  <section v-else class="h-full w-full" flex="~ col items-center justify-center gap-4">
+    <h3 class="text-2xl text-white">У вас нет секций.</h3>
   </section>
 </template>

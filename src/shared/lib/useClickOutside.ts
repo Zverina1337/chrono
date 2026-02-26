@@ -1,6 +1,9 @@
-import { onMounted, onUnmounted, Ref } from "vue";
+import { onMounted, onUnmounted, ShallowRef } from "vue";
 
-export const useClickOutside = (element: Ref<HTMLElement | null>, callback: () => void) => {
+export const useClickOutside = (
+  element: Readonly<ShallowRef<HTMLElement | null>>,
+  callback: () => void,
+) => {
   const checkElement = (event: Event) => {
     if (!element.value?.contains(event.target as Node)) {
       callback();

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, shallowRef, ref } from "vue";
+import { computed, shallowRef, useTemplateRef, nextTick } from "vue";
 import { useClickOutside } from "@/shared/lib/useClickOutside";
 
 interface Props {
@@ -14,32 +14,48 @@ interface Emits {
 const props = defineProps<Props>();
 const emits = defineEmits<Emits>();
 
-const editable = shallowRef("");
+const editableId = shallowRef("");
 const editableValue = computed({
   get: () => props.modelValue,
   set: (value) => emits("update:model-value", value),
 });
 
-const handleClick = () => {
-  editable.value = props.id;
-};
-const container = ref();
+const input = useTemplateRef<HTMLInputElement>("input");
 
-useClickOutside(container, () => (editable.value = ""));
+const handleClick = async () => {
+  editableId.value = props.id;
+  await nextTick();
+  input.value?.focus();
+};
+
+const container = useTemplateRef<HTMLElement>("container");
+
+useClickOutside(container, () => (editableId.value = ""));
+
+const name = crypto.randomUUID();
 </script>
 <template>
   <div ref="container">
-    <span v-show="editable !== id" @click="handleClick">
+    <span v-show="editableId !== id" @click="handleClick">
       <slot></slot>
     </span>
-    <span v-show="editable === id" flex="~ justify-between items-center gap-4">
+    <span v-show="editableId === id" flex="~ justify-between items-center gap-4">
       <input
-        ref="input"
         v-model="editableValue"
-        class="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500"
+        ref="input"
+        class="placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500"
+        px="3.5"
+        py="2"
+        bg="white/5"
+        rounded="md"
+        display="block"
+        w="full"
         text="white base"
         outline="1 -~-offset-1 white/10"
         type="text"
+        :name
+        @keydown.enter="editableId = ''"
+        @keydown.escape="editableId = ''"
       />
     </span>
   </div>

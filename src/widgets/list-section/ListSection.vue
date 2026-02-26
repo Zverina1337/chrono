@@ -38,6 +38,7 @@ const handleAddTask: ITaskActions["addTask"] = (sectionUuid, data) => {
       flex="~ col gap-4"
     >
       <ItemSection
+        :key="section.uuid"
         :section
         @edit-section="handleEditSection"
         @remove-section="handleRemoveSection"

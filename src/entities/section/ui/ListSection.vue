@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import ItemSection from "@/widgets/item-section/ItemSection.vue";
 import { storeToRefs } from "pinia";
-import { useSectionStore } from "@/entities/section/model/section";
+import { useSectionStore } from "../model/section";
 
 const sectionStore = useSectionStore();
 

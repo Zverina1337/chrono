@@ -39,7 +39,7 @@ const name = crypto.randomUUID();
     <span v-show="editableId !== id" @click="handleClick">
       <slot></slot>
     </span>
-    <span v-show="editableId === id" flex="~ justify-between items-center gap-4">
+    <span v-show="editableId === id" flex="~" justify="between" items="center" gap="4">
       <input
         v-model="editableValue"
         ref="input"

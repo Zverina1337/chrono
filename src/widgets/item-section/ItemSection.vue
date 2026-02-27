@@ -24,20 +24,24 @@ const { addTask } = taskStore;
 </script>
 
 <template>
-  <div flex="~ col gap-4">
-    <div flex="~ justify-between items-center">
+  <div flex="~ col" gap="4">
+    <div flex="~" items="center" justify="between">
       <InlineEdit :id="section.uuid" v-model="sectionName">
-        <h2 class="text-2xl text-gray-300 font-medium">
+        <h2 text="2xl gray-300" font="medium">
           {{ section?.name }}
         </h2>
       </InlineEdit>
       <Button
-        class="rounded-full i-material-symbols-light:cancel-outline text-2xl bg-white"
+        rounded="full"
+        text="2xl"
+        bg="white"
+        class="i-material-symbols-light:cancel-outline"
         @click="removeSection(section.uuid)"
       />
     </div>
     <Button
-      class="px-2 py-1"
+      px="2"
+      py="1"
       @click="
         addTask(section.uuid, {
           name: 'task-name',

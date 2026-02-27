@@ -5,6 +5,7 @@ import { useSectionStore } from "@/entities/section/model/section";
 import { useTaskStore } from "@/entities/task/model/task";
 import Button from "@/shared/ui/Button.vue";
 import InlineEdit from "@/shared/ui/InlineEdit.vue";
+import ListTask from "@/entities/task/ui/ListTask.vue";
 
 interface Props {
   section: ISection;
@@ -52,4 +53,5 @@ const { addTask } = taskStore;
       Добавить задачу
     </Button>
   </div>
+  <ListTask :section />
 </template>

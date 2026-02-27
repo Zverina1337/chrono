@@ -11,7 +11,14 @@ const taskStore = useTaskStore();
 const { getTasks } = taskStore;
 </script>
 <template>
-  <article w="full" border="~ white" bg="gray-600" p="5" v-for="task in getTasks(section.uuid)">
+  <article
+    w="full"
+    border="~ white"
+    bg="gray-600"
+    p="5"
+    rounded="md"
+    v-for="task in getTasks(section.uuid)"
+  >
     <ItemTask :task />
   </article>
 </template>

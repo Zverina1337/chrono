@@ -14,7 +14,6 @@ const onBackdropClick = (event: Event) => {
 
 const close = () => emits("update:modelValue", false);
 watchEffect(() => {
-  console.log(modal.value);
   if (props.modelValue) modal.value?.showModal();
   else modal.value?.close();
 });

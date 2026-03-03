@@ -25,33 +25,35 @@ const { addTask } = taskStore;
 </script>
 
 <template>
-  <div flex="~ col" gap="4">
-    <div flex="~" items="center" justify="between">
-      <InlineEdit :id="section.uuid" v-model="sectionName">
-        <h2 text="2xl gray-300" font="medium">
-          {{ section?.name }}
-        </h2>
-      </InlineEdit>
+  <div w="full" h="full" rounded="~" bg="gray-700" p="5" flex="~ col" gap="4">
+    <div flex="~ col" gap="4">
+      <div flex="~" items="center" justify="between">
+        <InlineEdit :id="section.uuid" v-model="sectionName">
+          <h2 text="2xl gray-300" font="medium">
+            {{ section?.name }}
+          </h2>
+        </InlineEdit>
+        <Button
+          rounded="full"
+          text="2xl"
+          bg="white"
+          class="i-material-symbols-light:cancel-outline"
+          @click="removeSection(section.uuid)"
+        />
+      </div>
       <Button
-        rounded="full"
-        text="2xl"
-        bg="white"
-        class="i-material-symbols-light:cancel-outline"
-        @click="removeSection(section.uuid)"
-      />
+        px="2"
+        py="1"
+        @click="
+          addTask(section.uuid, {
+            name: 'task-name',
+            description: 'task-description',
+          })
+        "
+      >
+        Добавить задачу
+      </Button>
     </div>
-    <Button
-      px="2"
-      py="1"
-      @click="
-        addTask(section.uuid, {
-          name: 'task-name',
-          description: 'task-description',
-        })
-      "
-    >
-      Добавить задачу
-    </Button>
+    <ListTask :section />
   </div>
-  <ListTask :section />
 </template>

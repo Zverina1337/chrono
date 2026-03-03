@@ -3,16 +3,13 @@ import { storeToRefs } from "pinia";
 import { useSectionStore } from "@/entities/section/model/section";
 import ListSection from "@/entities//section/ui/ListSection.vue";
 import Button from "@/shared/ui/Button.vue";
-import Modal from "@/shared/ui/Modal.vue";
-import { shallowRef } from "vue";
+
 const sectionStore = useSectionStore();
 const { sections } = storeToRefs(sectionStore);
 const { addSection } = sectionStore;
-const modal = shallowRef(false);
 </script>
 <template>
   <ListSection :sections />
-
   <Button
     class="[writing-mode:vertical-lr]"
     p="2"
@@ -22,6 +19,4 @@ const modal = shallowRef(false);
   >
     Добавить секцию
   </Button>
-  <Button @click="modal = true">открыть</Button>
-  <Modal v-model="modal"></Modal>
 </template>

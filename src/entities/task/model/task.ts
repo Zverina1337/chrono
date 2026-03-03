@@ -28,5 +28,14 @@ export const useTaskStore = defineStore("task", () => {
     }
   };
 
-  return { getTasks, addTask };
+  const deleteTask: ITaskActions["deleteTask"] = (sectionUuid, uuid) => {
+    const tasksBySectionId = getTasks(sectionUuid);
+    if (!tasksBySectionId.length) return;
+    tasks.value.set(
+      sectionUuid,
+      tasksBySectionId.filter((task) => task.uuid !== uuid),
+    );
+  };
+
+  return { getTasks, addTask, deleteTask };
 });

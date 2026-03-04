@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, shallowRef } from "vue";
 import { ISection } from "@/entities/section/model/types";
 import { useSectionStore } from "@/entities/section/model/section";
 import { useTaskStore } from "@/entities/task/model/task";
 import Button from "@/shared/ui/Button.vue";
 import InlineEdit from "@/shared/ui/InlineEdit.vue";
 import ListTask from "@/entities/task/ui/ListTask.vue";
+import { ITask } from "@/entities/task/model/types";
 
 interface Props {
   section: ISection;
@@ -21,7 +22,26 @@ const sectionName = computed({
 const sectionStore = useSectionStore();
 const taskStore = useTaskStore();
 const { removeSection, editSection } = sectionStore;
-const { addTask } = taskStore;
+const { addTask, moveTask } = taskStore;
+const isDragging = shallowRef(false);
+
+const handleDrop = (event: DragEvent) => {
+  isDragging.value = false;
+  const target = event.target as HTMLElement | null;
+  if (!event.dataTransfer || !target) return;
+  const task = JSON.parse(event.dataTransfer.getData("application/json")) as ITask;
+  moveTask(task, props.section.uuid);
+};
+
+const handleDragLeave = (event: DragEvent) => {
+  const target = event.target as HTMLElement | null;
+  const relatedTarget = event.relatedTarget as HTMLElement | null;
+  if (!target || !relatedTarget) return;
+
+  if (!target.contains(relatedTarget)) {
+    isDragging.value = false;
+  }
+};
 </script>
 
 <template>
@@ -54,6 +74,25 @@ const { addTask } = taskStore;
         Добавить задачу
       </Button>
     </div>
-    <ListTask :section />
+    <div
+      :class="
+        isDragging
+          ? 'border-green-500 border-dashed border-2 bg-green-500/10 rounded-lg'
+          : 'border-green-500 border-dashed border-none bg-transparent'
+      "
+      flex="~ col"
+      gap="4"
+      h="full"
+      w="full"
+      p="1"
+      transition="colors"
+      @dragenter="() => (isDragging = true)"
+      @dragend="() => (isDragging = false)"
+      @dragleave="handleDragLeave"
+      @drop="handleDrop"
+      @dragover.prevent
+    >
+      <ListTask :section />
+    </div>
   </div>
 </template>

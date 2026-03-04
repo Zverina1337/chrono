@@ -23,7 +23,15 @@ pub fn run() {
   tauri::Builder::default()
     .plugin(tauri_plugin_opener::init())
     .setup(|app| {
-      use tauri::Manager;
+      use tauri::{Manager, WebviewUrl, WebviewWindowBuilder};
+
+      // Создаём окно программно, чтобы отключить нативный file drop handler
+      // (он перехватывает drag-события до WebView и ломает HTML5 Drag and Drop API)
+      WebviewWindowBuilder::new(app, "main", WebviewUrl::App("index.html".into()))
+        .title("tauri-app")
+        .inner_size(800.0, 600.0)
+        .disable_drag_drop_handler()
+        .build()?;
 
       let app_dir = app.path().app_data_dir()?;
       fs::create_dir_all(&app_dir)?;

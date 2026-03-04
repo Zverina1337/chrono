@@ -3,10 +3,7 @@ import { ISection } from "@/entities/section/model/types";
 import { useTaskStore } from "../model/task";
 import ItemTask from "./ItemTask.vue";
 
-interface Props {
-  section: ISection;
-}
-const props = defineProps<Props>();
+const props = defineProps<{ section: ISection }>();
 const taskStore = useTaskStore();
 const { getTasks } = taskStore;
 </script>

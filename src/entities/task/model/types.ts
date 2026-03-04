@@ -14,4 +14,7 @@ export interface ITaskActions {
   ) => void;
   getTasks: (sectionUuid: ITask["sectionUuid"]) => ITask[];
   deleteTask: (sectionUuid: ITask["sectionUuid"], uuid: ITask["uuid"]) => void;
+  moveTask: (task: ITask, toSectionUuid: ITask["sectionUuid"]) => void;
+  swapTask: (task: ITask, targetTask: ITask) => void;
+  getTask: (sectionUuid: ITask["sectionUuid"], uuid: ITask["uuid"]) => ITask | null;
 }

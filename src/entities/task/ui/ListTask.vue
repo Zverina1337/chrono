@@ -8,5 +8,5 @@ const taskStore = useTaskStore();
 const { getTasks } = taskStore;
 </script>
 <template>
-  <ItemTask :task v-for="task in getTasks(section.uuid)" />
+  <ItemTask :task v-for="task in getTasks(section.uuid)" :key="task.uuid" />
 </template>

@@ -3,7 +3,7 @@ use uuid::Uuid;
 
 use crate::error::AppError;
 use crate::models::subtask::{CreateSubtask, Subtask, UpdateSubtask};
-use crate::repository::project_repo::now;
+use crate::utils;
 
 pub fn get_by_task(conn: &Connection, task_uuid: &str) -> Result<Vec<Subtask>, AppError> {
   let mut stmt = conn.prepare(
@@ -16,7 +16,7 @@ pub fn get_by_task(conn: &Connection, task_uuid: &str) -> Result<Vec<Subtask>, A
       uuid: row.get(0)?,
       task_uuid: row.get(1)?,
       name: row.get(2)?,
-      is_completed: row.get::<_, i32>(3)? != 0,
+      is_completed: utils::bool_from_i32(row.get::<_, i32>(3)?),
       position: row.get(4)?,
       created_at: row.get(5)?,
       updated_at: row.get(6)?,
@@ -32,20 +32,13 @@ pub fn get_by_task(conn: &Connection, task_uuid: &str) -> Result<Vec<Subtask>, A
 
 pub fn create(conn: &Connection, data: CreateSubtask) -> Result<Subtask, AppError> {
   let id = Uuid::new_v4().to_string();
-  let now = now();
-
-  let max_pos: i32 = conn
-    .query_row(
-      "SELECT COALESCE(MAX(position), -1) FROM subtasks WHERE task_uuid = ?1",
-      params![data.task_uuid],
-      |row| row.get(0),
-    )
-    .unwrap_or(-1);
+  let now = utils::now_utc();
+  let position = utils::next_position(conn, "subtasks", "task_uuid", &data.task_uuid)?;
 
   conn.execute(
     "INSERT INTO subtasks (uuid, task_uuid, name, is_completed, position, created_at, updated_at)
      VALUES (?1, ?2, ?3, 0, ?4, ?5, ?6)",
-    params![id, data.task_uuid, data.name, max_pos + 1, now, now],
+    params![id, data.task_uuid, data.name, position, now, now],
   )?;
 
   Ok(Subtask {
@@ -53,7 +46,7 @@ pub fn create(conn: &Connection, data: CreateSubtask) -> Result<Subtask, AppErro
     task_uuid: data.task_uuid,
     name: data.name,
     is_completed: false,
-    position: max_pos + 1,
+    position,
     created_at: now.clone(),
     updated_at: now,
   })
@@ -69,7 +62,7 @@ pub fn update(conn: &Connection, uuid: &str, data: UpdateSubtask) -> Result<Subt
     return Err(AppError::NotFound(format!("Подзадача {uuid} не найдена")));
   }
 
-  let now = now();
+  let now = utils::now_utc();
 
   if let Some(name) = &data.name {
     conn.execute(
@@ -113,7 +106,7 @@ fn get_by_uuid(conn: &Connection, uuid: &str) -> Result<Subtask, AppError> {
           uuid: row.get(0)?,
           task_uuid: row.get(1)?,
           name: row.get(2)?,
-          is_completed: row.get::<_, i32>(3)? != 0,
+          is_completed: utils::bool_from_i32(row.get::<_, i32>(3)?),
           position: row.get(4)?,
           created_at: row.get(5)?,
           updated_at: row.get(6)?,

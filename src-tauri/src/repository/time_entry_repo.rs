@@ -3,7 +3,7 @@ use uuid::Uuid;
 
 use crate::error::AppError;
 use crate::models::time_entry::{CreateTimeEntry, TimeEntry, UpdateTimeEntry};
-use crate::repository::project_repo::now;
+use crate::utils;
 
 fn row_to_entry(row: &rusqlite::Row) -> rusqlite::Result<TimeEntry> {
   Ok(TimeEntry {
@@ -11,14 +11,14 @@ fn row_to_entry(row: &rusqlite::Row) -> rusqlite::Result<TimeEntry> {
     task_uuid: row.get(1)?,
     started_at: row.get(2)?,
     ended_at: row.get(3)?,
-    duration_minutes: row.get(4)?,
+    duration_seconds: row.get(4)?,
     description: row.get(5)?,
     created_at: row.get(6)?,
   })
 }
 
 const SELECT_COLS: &str =
-  "uuid, task_uuid, started_at, ended_at, duration_minutes, description, created_at";
+  "uuid, task_uuid, started_at, ended_at, duration_seconds, description, created_at";
 
 pub fn get_by_task(conn: &Connection, task_uuid: &str) -> Result<Vec<TimeEntry>, AppError> {
   let sql = format!(
@@ -37,17 +37,17 @@ pub fn get_by_task(conn: &Connection, task_uuid: &str) -> Result<Vec<TimeEntry>,
 
 pub fn create(conn: &Connection, data: CreateTimeEntry) -> Result<TimeEntry, AppError> {
   let id = Uuid::new_v4().to_string();
-  let now = now();
+  let now = utils::now_utc();
 
   conn.execute(
-    "INSERT INTO time_entries (uuid, task_uuid, started_at, ended_at, duration_minutes, description, created_at)
+    "INSERT INTO time_entries (uuid, task_uuid, started_at, ended_at, duration_seconds, description, created_at)
      VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7)",
     params![
       id,
       data.task_uuid,
       data.started_at,
       data.ended_at,
-      data.duration_minutes,
+      data.duration_seconds,
       data.description,
       now
     ],
@@ -58,7 +58,7 @@ pub fn create(conn: &Connection, data: CreateTimeEntry) -> Result<TimeEntry, App
     task_uuid: data.task_uuid,
     started_at: data.started_at,
     ended_at: data.ended_at,
-    duration_minutes: data.duration_minutes,
+    duration_seconds: data.duration_seconds,
     description: data.description,
     created_at: now,
   })
@@ -86,10 +86,10 @@ pub fn update(
       params![ended_at, uuid],
     )?;
   }
-  if let Some(duration_minutes) = &data.duration_minutes {
+  if let Some(duration_seconds) = &data.duration_seconds {
     conn.execute(
-      "UPDATE time_entries SET duration_minutes = ?1 WHERE uuid = ?2",
-      params![duration_minutes, uuid],
+      "UPDATE time_entries SET duration_seconds = ?1 WHERE uuid = ?2",
+      params![duration_seconds, uuid],
     )?;
   }
   if let Some(description) = &data.description {

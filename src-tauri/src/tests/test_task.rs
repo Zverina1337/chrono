@@ -11,7 +11,7 @@ fn make_task(project_uuid: &str) -> CreateTask {
     description: "".to_string(),
     due_date: None,
     start_date: None,
-    estimated_minutes: None,
+    estimated_seconds: None,
   }
 }
 
@@ -49,7 +49,7 @@ fn test_create_task_with_status_and_priority() {
       description: "Подробное описание".to_string(),
       due_date: Some("2026-12-31".to_string()),
       start_date: Some("2026-03-01".to_string()),
-      estimated_minutes: Some(120),
+      estimated_seconds: Some(120),
     },
   )
   .unwrap();
@@ -62,7 +62,7 @@ fn test_create_task_with_status_and_priority() {
   assert_eq!(task.description, "Подробное описание");
   assert_eq!(task.due_date.as_deref(), Some("2026-12-31"));
   assert_eq!(task.start_date.as_deref(), Some("2026-03-01"));
-  assert_eq!(task.estimated_minutes, Some(120));
+  assert_eq!(task.estimated_seconds, Some(120));
 }
 
 #[test]
@@ -133,7 +133,7 @@ fn test_update_task_name() {
       description: None,
       due_date: None,
       start_date: None,
-      estimated_minutes: None,
+      estimated_seconds: None,
       position: None,
     },
   )
@@ -160,7 +160,7 @@ fn test_update_task_status() {
       description: None,
       due_date: None,
       start_date: None,
-      estimated_minutes: None,
+      estimated_seconds: None,
       position: None,
     },
   )
@@ -182,7 +182,7 @@ fn test_update_task_status() {
       description: None,
       due_date: None,
       start_date: None,
-      estimated_minutes: None,
+      estimated_seconds: None,
       position: None,
     },
   )
@@ -203,7 +203,7 @@ fn test_update_task_dates() {
     UpdateTask {
       due_date: Some(Some("2026-06-15".to_string())),
       start_date: Some(Some("2026-03-01".to_string())),
-      estimated_minutes: Some(Some(60)),
+      estimated_seconds: Some(Some(60)),
       status_uuid: None,
       priority_uuid: None,
       name: None,
@@ -215,7 +215,7 @@ fn test_update_task_dates() {
 
   assert_eq!(updated.due_date.as_deref(), Some("2026-06-15"));
   assert_eq!(updated.start_date.as_deref(), Some("2026-03-01"));
-  assert_eq!(updated.estimated_minutes, Some(60));
+  assert_eq!(updated.estimated_seconds, Some(60));
 }
 
 #[test]
@@ -231,7 +231,7 @@ fn test_update_task_not_found() {
       description: None,
       due_date: None,
       start_date: None,
-      estimated_minutes: None,
+      estimated_seconds: None,
       position: None,
     },
   );

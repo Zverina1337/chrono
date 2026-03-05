@@ -52,7 +52,7 @@ pub fn create_test_task(conn: &Connection) -> (String, String) {
       description: "".to_string(),
       due_date: None,
       start_date: None,
-      estimated_minutes: None,
+      estimated_seconds: None,
     },
   )
   .unwrap();

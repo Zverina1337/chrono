@@ -3,7 +3,7 @@ use uuid::Uuid;
 
 use crate::error::AppError;
 use crate::models::priority::{CreatePriority, Priority, UpdatePriority};
-use crate::repository::project_repo::now;
+use crate::utils;
 
 /// Внутренний метод для создания дефолтных приоритетов
 pub fn create_internal(
@@ -14,7 +14,7 @@ pub fn create_internal(
   level: i32,
 ) -> Result<Priority, AppError> {
   let id = Uuid::new_v4().to_string();
-  let now = now();
+  let now = utils::now_utc();
 
   conn.execute(
     "INSERT INTO priorities (uuid, project_uuid, name, color, level, created_at, updated_at)
@@ -72,7 +72,7 @@ pub fn update(conn: &Connection, uuid: &str, data: UpdatePriority) -> Result<Pri
     return Err(AppError::NotFound(format!("Приоритет {uuid} не найден")));
   }
 
-  let now = now();
+  let now = utils::now_utc();
 
   if let Some(name) = &data.name {
     conn.execute(

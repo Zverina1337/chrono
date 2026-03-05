@@ -3,7 +3,7 @@ use uuid::Uuid;
 
 use crate::error::AppError;
 use crate::models::status::{CreateStatus, Status, UpdateStatus};
-use crate::repository::project_repo::now;
+use crate::utils;
 
 /// Внутренний метод для создания дефолтных статусов (без генерации позиции)
 pub fn create_internal(
@@ -14,7 +14,7 @@ pub fn create_internal(
   position: i32,
 ) -> Result<Status, AppError> {
   let id = Uuid::new_v4().to_string();
-  let now = now();
+  let now = utils::now_utc();
 
   conn.execute(
     "INSERT INTO statuses (uuid, project_uuid, name, color, position, created_at, updated_at)
@@ -59,15 +59,8 @@ pub fn get_by_project(conn: &Connection, project_uuid: &str) -> Result<Vec<Statu
 }
 
 pub fn create(conn: &Connection, data: CreateStatus) -> Result<Status, AppError> {
-  let max_pos: i32 = conn
-    .query_row(
-      "SELECT COALESCE(MAX(position), -1) FROM statuses WHERE project_uuid = ?1",
-      params![data.project_uuid],
-      |row| row.get(0),
-    )
-    .unwrap_or(-1);
-
-  create_internal(conn, &data.project_uuid, &data.name, &data.color, max_pos + 1)
+  let position = utils::next_position(conn, "statuses", "project_uuid", &data.project_uuid)?;
+  create_internal(conn, &data.project_uuid, &data.name, &data.color, position)
 }
 
 pub fn update(conn: &Connection, uuid: &str, data: UpdateStatus) -> Result<Status, AppError> {
@@ -80,7 +73,7 @@ pub fn update(conn: &Connection, uuid: &str, data: UpdateStatus) -> Result<Statu
     return Err(AppError::NotFound(format!("Статус {uuid} не найден")));
   }
 
-  let now = now();
+  let now = utils::now_utc();
 
   if let Some(name) = &data.name {
     conn.execute(

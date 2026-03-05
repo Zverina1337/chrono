@@ -3,7 +3,7 @@ use uuid::Uuid;
 
 use crate::error::AppError;
 use crate::models::task::{CreateTask, Task, UpdateTask};
-use crate::repository::project_repo::now;
+use crate::utils;
 
 fn row_to_task(row: &rusqlite::Row) -> rusqlite::Result<Task> {
   Ok(Task {
@@ -15,7 +15,7 @@ fn row_to_task(row: &rusqlite::Row) -> rusqlite::Result<Task> {
     description: row.get(5)?,
     due_date: row.get(6)?,
     start_date: row.get(7)?,
-    estimated_minutes: row.get(8)?,
+    estimated_seconds: row.get(8)?,
     position: row.get(9)?,
     created_at: row.get(10)?,
     updated_at: row.get(11)?,
@@ -24,7 +24,7 @@ fn row_to_task(row: &rusqlite::Row) -> rusqlite::Result<Task> {
 
 const SELECT_COLS: &str =
   "uuid, project_uuid, status_uuid, priority_uuid, name, description,
-   due_date, start_date, estimated_minutes, position, created_at, updated_at";
+   due_date, start_date, estimated_seconds, position, created_at, updated_at";
 
 pub fn get_by_project(conn: &Connection, project_uuid: &str) -> Result<Vec<Task>, AppError> {
   let sql = format!(
@@ -50,19 +50,12 @@ pub fn get_by_uuid(conn: &Connection, uuid: &str) -> Result<Task, AppError> {
 
 pub fn create(conn: &Connection, data: CreateTask) -> Result<Task, AppError> {
   let id = Uuid::new_v4().to_string();
-  let now = now();
-
-  let max_pos: i32 = conn
-    .query_row(
-      "SELECT COALESCE(MAX(position), -1) FROM tasks WHERE project_uuid = ?1",
-      params![data.project_uuid],
-      |row| row.get(0),
-    )
-    .unwrap_or(-1);
+  let now = utils::now_utc();
+  let position = utils::next_position(conn, "tasks", "project_uuid", &data.project_uuid)?;
 
   conn.execute(
     "INSERT INTO tasks (uuid, project_uuid, status_uuid, priority_uuid, name, description,
-     due_date, start_date, estimated_minutes, position, created_at, updated_at)
+     due_date, start_date, estimated_seconds, position, created_at, updated_at)
      VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12)",
     params![
       id,
@@ -73,8 +66,8 @@ pub fn create(conn: &Connection, data: CreateTask) -> Result<Task, AppError> {
       data.description,
       data.due_date,
       data.start_date,
-      data.estimated_minutes,
-      max_pos + 1,
+      data.estimated_seconds,
+      position,
       now,
       now
     ],
@@ -93,7 +86,7 @@ pub fn update(conn: &Connection, uuid: &str, data: UpdateTask) -> Result<Task, A
     return Err(AppError::NotFound(format!("Задача {uuid} не найдена")));
   }
 
-  let now = now();
+  let now = utils::now_utc();
 
   if let Some(status_uuid) = &data.status_uuid {
     conn.execute(
@@ -131,10 +124,10 @@ pub fn update(conn: &Connection, uuid: &str, data: UpdateTask) -> Result<Task, A
       params![start_date, now, uuid],
     )?;
   }
-  if let Some(estimated_minutes) = &data.estimated_minutes {
+  if let Some(estimated_seconds) = &data.estimated_seconds {
     conn.execute(
-      "UPDATE tasks SET estimated_minutes = ?1, updated_at = ?2 WHERE uuid = ?3",
-      params![estimated_minutes, now, uuid],
+      "UPDATE tasks SET estimated_seconds = ?1, updated_at = ?2 WHERE uuid = ?3",
+      params![estimated_seconds, now, uuid],
     )?;
   }
   if let Some(position) = &data.position {

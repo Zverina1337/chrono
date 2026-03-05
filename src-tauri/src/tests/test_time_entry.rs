@@ -13,7 +13,7 @@ fn test_create_time_entry() {
       task_uuid: task_uuid.clone(),
       started_at: "2026-03-02 10:00:00".to_string(),
       ended_at: Some("2026-03-02 11:30:00".to_string()),
-      duration_minutes: Some(90),
+      duration_seconds: Some(90),
       description: "Работа над задачей".to_string(),
     },
   )
@@ -22,7 +22,7 @@ fn test_create_time_entry() {
   assert_eq!(entry.task_uuid, task_uuid);
   assert_eq!(entry.started_at, "2026-03-02 10:00:00");
   assert_eq!(entry.ended_at.as_deref(), Some("2026-03-02 11:30:00"));
-  assert_eq!(entry.duration_minutes, Some(90));
+  assert_eq!(entry.duration_seconds, Some(90));
   assert_eq!(entry.description, "Работа над задачей");
   assert!(!entry.uuid.is_empty());
   assert!(!entry.created_at.is_empty());
@@ -40,14 +40,14 @@ fn test_create_time_entry_running_timer() {
       task_uuid,
       started_at: "2026-03-02 10:00:00".to_string(),
       ended_at: None,
-      duration_minutes: None,
+      duration_seconds: None,
       description: "".to_string(),
     },
   )
   .unwrap();
 
   assert!(entry.ended_at.is_none());
-  assert!(entry.duration_minutes.is_none());
+  assert!(entry.duration_seconds.is_none());
 }
 
 #[test]
@@ -61,7 +61,7 @@ fn test_get_time_entries_by_task() {
       task_uuid: task_uuid.clone(),
       started_at: "2026-03-02 08:00:00".to_string(),
       ended_at: Some("2026-03-02 09:00:00".to_string()),
-      duration_minutes: Some(60),
+      duration_seconds: Some(60),
       description: "".to_string(),
     },
   )
@@ -73,7 +73,7 @@ fn test_get_time_entries_by_task() {
       task_uuid: task_uuid.clone(),
       started_at: "2026-03-02 10:00:00".to_string(),
       ended_at: Some("2026-03-02 11:00:00".to_string()),
-      duration_minutes: Some(60),
+      duration_seconds: Some(60),
       description: "".to_string(),
     },
   )
@@ -104,7 +104,7 @@ fn test_update_time_entry_stop_timer() {
       task_uuid,
       started_at: "2026-03-02 10:00:00".to_string(),
       ended_at: None,
-      duration_minutes: None,
+      duration_seconds: None,
       description: "".to_string(),
     },
   )
@@ -117,14 +117,14 @@ fn test_update_time_entry_stop_timer() {
     &entry.uuid,
     UpdateTimeEntry {
       ended_at: Some(Some("2026-03-02 11:30:00".to_string())),
-      duration_minutes: Some(Some(90)),
+      duration_seconds: Some(Some(90)),
       description: None,
     },
   )
   .unwrap();
 
   assert_eq!(updated.ended_at.as_deref(), Some("2026-03-02 11:30:00"));
-  assert_eq!(updated.duration_minutes, Some(90));
+  assert_eq!(updated.duration_seconds, Some(90));
 }
 
 #[test]
@@ -138,7 +138,7 @@ fn test_update_time_entry_description() {
       task_uuid,
       started_at: "2026-03-02 10:00:00".to_string(),
       ended_at: None,
-      duration_minutes: None,
+      duration_seconds: None,
       description: "".to_string(),
     },
   )
@@ -149,7 +149,7 @@ fn test_update_time_entry_description() {
     &entry.uuid,
     UpdateTimeEntry {
       ended_at: None,
-      duration_minutes: None,
+      duration_seconds: None,
       description: Some("Обновлённое описание".to_string()),
     },
   )
@@ -169,7 +169,7 @@ fn test_update_time_entry_clear_duration() {
       task_uuid,
       started_at: "2026-03-02 10:00:00".to_string(),
       ended_at: Some("2026-03-02 11:00:00".to_string()),
-      duration_minutes: Some(60),
+      duration_seconds: Some(60),
       description: "".to_string(),
     },
   )
@@ -181,13 +181,13 @@ fn test_update_time_entry_clear_duration() {
     &entry.uuid,
     UpdateTimeEntry {
       ended_at: None,
-      duration_minutes: Some(None),
+      duration_seconds: Some(None),
       description: None,
     },
   )
   .unwrap();
 
-  assert!(updated.duration_minutes.is_none());
+  assert!(updated.duration_seconds.is_none());
 }
 
 #[test]
@@ -198,7 +198,7 @@ fn test_update_time_entry_not_found() {
     "nonexistent",
     UpdateTimeEntry {
       ended_at: None,
-      duration_minutes: None,
+      duration_seconds: None,
       description: Some("Тест".to_string()),
     },
   );
@@ -216,7 +216,7 @@ fn test_delete_time_entry() {
       task_uuid: task_uuid.clone(),
       started_at: "2026-03-02 10:00:00".to_string(),
       ended_at: None,
-      duration_minutes: None,
+      duration_seconds: None,
       description: "".to_string(),
     },
   )
@@ -246,7 +246,7 @@ fn test_delete_task_cascades_time_entries() {
       task_uuid: task_uuid.clone(),
       started_at: "2026-03-02 10:00:00".to_string(),
       ended_at: None,
-      duration_minutes: None,
+      duration_seconds: None,
       description: "".to_string(),
     },
   )

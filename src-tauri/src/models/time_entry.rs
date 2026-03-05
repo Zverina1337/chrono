@@ -7,7 +7,7 @@ pub struct TimeEntry {
   pub task_uuid: String,
   pub started_at: String,
   pub ended_at: Option<String>,
-  pub duration_minutes: Option<i32>,
+  pub duration_seconds: Option<i64>,
   pub description: String,
   pub created_at: String,
 }
@@ -18,7 +18,7 @@ pub struct CreateTimeEntry {
   pub task_uuid: String,
   pub started_at: String,
   pub ended_at: Option<String>,
-  pub duration_minutes: Option<i32>,
+  pub duration_seconds: Option<i64>,
   #[serde(default)]
   pub description: String,
 }
@@ -27,6 +27,6 @@ pub struct CreateTimeEntry {
 #[serde(rename_all = "camelCase")]
 pub struct UpdateTimeEntry {
   pub ended_at: Option<Option<String>>,
-  pub duration_minutes: Option<Option<i32>>,
+  pub duration_seconds: Option<Option<i64>>,
   pub description: Option<String>,
 }

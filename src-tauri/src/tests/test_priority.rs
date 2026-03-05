@@ -136,7 +136,7 @@ fn test_delete_priority_sets_task_null() {
       description: "".to_string(),
       due_date: None,
       start_date: None,
-      estimated_minutes: None,
+      estimated_seconds: None,
     },
   )
   .unwrap();

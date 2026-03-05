@@ -11,7 +11,7 @@ pub struct Task {
   pub description: String,
   pub due_date: Option<String>,
   pub start_date: Option<String>,
-  pub estimated_minutes: Option<i32>,
+  pub estimated_seconds: Option<i64>,
   pub position: i32,
   pub created_at: String,
   pub updated_at: String,
@@ -28,7 +28,7 @@ pub struct CreateTask {
   pub description: String,
   pub due_date: Option<String>,
   pub start_date: Option<String>,
-  pub estimated_minutes: Option<i32>,
+  pub estimated_seconds: Option<i64>,
 }
 
 #[derive(Debug, Deserialize)]
@@ -40,6 +40,6 @@ pub struct UpdateTask {
   pub description: Option<String>,
   pub due_date: Option<Option<String>>,
   pub start_date: Option<Option<String>>,
-  pub estimated_minutes: Option<Option<i32>>,
+  pub estimated_seconds: Option<Option<i64>>,
   pub position: Option<i32>,
 }

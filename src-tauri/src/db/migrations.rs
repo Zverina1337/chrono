@@ -82,6 +82,21 @@ const MIGRATIONS: &[&str] = &[
     created_at       TEXT NOT NULL
   );
   ",
+  // v2 — переименование колонок + индексы на FK
+  "
+  ALTER TABLE tasks RENAME COLUMN estimated_minutes TO estimated_seconds;
+  ALTER TABLE time_entries RENAME COLUMN duration_minutes TO duration_seconds;
+
+  CREATE INDEX IF NOT EXISTS idx_statuses_project ON statuses(project_uuid);
+  CREATE INDEX IF NOT EXISTS idx_priorities_project ON priorities(project_uuid);
+  CREATE INDEX IF NOT EXISTS idx_tasks_project ON tasks(project_uuid);
+  CREATE INDEX IF NOT EXISTS idx_tasks_status ON tasks(status_uuid);
+  CREATE INDEX IF NOT EXISTS idx_tasks_priority ON tasks(priority_uuid);
+  CREATE INDEX IF NOT EXISTS idx_subtasks_task ON subtasks(task_uuid);
+  CREATE INDEX IF NOT EXISTS idx_time_entries_task ON time_entries(task_uuid);
+  CREATE INDEX IF NOT EXISTS idx_task_labels_task ON task_labels(task_uuid);
+  CREATE INDEX IF NOT EXISTS idx_task_labels_label ON task_labels(label_uuid);
+  ",
 ];
 
 /// Выполняет миграции, отслеживая версию через user_version

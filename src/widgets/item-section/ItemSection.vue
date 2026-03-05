@@ -7,6 +7,8 @@ import Button from "@/shared/ui/Button.vue";
 import InlineEdit from "@/shared/ui/InlineEdit.vue";
 import ListTask from "@/entities/task/ui/ListTask.vue";
 import { ITask } from "@/entities/task/model/types";
+import Modal from "@/shared/ui/Modal.vue";
+import FormTask from "@/entities/task/ui/FormTask.vue";
 
 interface Props {
   section: ISection;
@@ -42,6 +44,7 @@ const handleDragLeave = (event: DragEvent) => {
     isDragging.value = false;
   }
 };
+const addTaskModal = shallowRef(false);
 </script>
 
 <template>
@@ -61,18 +64,7 @@ const handleDragLeave = (event: DragEvent) => {
           @click="removeSection(section.uuid)"
         />
       </div>
-      <Button
-        px="2"
-        py="1"
-        @click="
-          addTask(section.uuid, {
-            name: 'task-name',
-            description: 'task-description',
-          })
-        "
-      >
-        Добавить задачу
-      </Button>
+      <Button px="2" py="1" @click="addTaskModal = true"> Добавить задачу </Button>
     </div>
     <div
       :class="
@@ -95,4 +87,7 @@ const handleDragLeave = (event: DragEvent) => {
       <ListTask :section />
     </div>
   </div>
+  <Modal v-model="addTaskModal">
+    <FormTask />
+  </Modal>
 </template>

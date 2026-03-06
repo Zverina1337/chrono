@@ -2,7 +2,7 @@
 import { useTemplateRef, watchEffect } from "vue";
 import Button from "@/shared/ui/Button.vue";
 
-const props = defineProps<{ modelValue: boolean }>();
+const props = defineProps<{ modelValue: boolean; title: string }>();
 const emits = defineEmits<{ "update:modelValue": [value: boolean] }>();
 const modal = useTemplateRef("dialog");
 
@@ -20,10 +20,10 @@ watchEffect(() => {
 </script>
 
 <template>
-  <dialog ref="dialog" @close="close" @click="onBackdropClick" rounded="md" bg="gray-800">
-    <div px="5" py="2" w="full" h="full" max-w="xl">
-      <div flex="~" justify="between" items="center" gap="4">
-        <h2 text="white 2xl" font="medium">Модалка</h2>
+  <dialog ref="dialog" @close="close" @click="onBackdropClick" rounded="xl" bg="gray-800">
+    <div px="2.5" pb="2" w="full" h="full" max-w="xl">
+      <div flex="~" justify="between" items="center" gap="4" pb="5">
+        <h2 text="white 2xl" font="medium">{{ title }}</h2>
         <Button
           rounded="full"
           text="2xl"

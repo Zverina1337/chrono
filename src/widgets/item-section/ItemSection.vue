@@ -87,7 +87,7 @@ const addTaskModal = shallowRef(false);
       <ListTask :section />
     </div>
   </div>
-  <Modal v-model="addTaskModal">
+  <Modal title="Добавить задачу" v-model="addTaskModal" p="5">
     <FormTask />
   </Modal>
 </template>

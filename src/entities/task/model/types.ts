@@ -1,16 +1,8 @@
-import { ISection } from "@/entities/section/model/types";
+import * as z from "zod";
+import { TaskSchema, createTaskSchema } from "./validation";
 
-export interface ITask {
-  uuid: string;
-  statusUuid?: ISection["uuid"];
-  projectUuid?: string;
-  priorityUuid: string;
-  name: string;
-  description: string;
-  dueDate?: string;
-  startDate?: string;
-  estimatedMinutes?: number;
-}
+export type ITask = z.infer<typeof TaskSchema>;
+export type ITaskCreateSchema = z.infer<typeof createTaskSchema>;
 
 export interface ITaskActions {
   addTask: (

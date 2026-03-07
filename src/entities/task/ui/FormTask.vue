@@ -6,12 +6,37 @@ import { defaultCreateTaskSchema, createTaskSchema } from "../model/validation";
 import * as z from "zod";
 import BaseTextarea from "@/shared/ui/BaseTextarea.vue";
 import BaseSelect from "@/shared/ui/BaseSelect.vue";
+import { ITaskCreateSchema } from "../model/types";
+
+const emits = defineEmits<{ submit: [form: ITaskCreateSchema] }>();
 
 const form = reactive(defaultCreateTaskSchema());
-const validate = () => {
+const submit = () => {
   const result = z.safeParse(createTaskSchema, form);
   console.log(result);
+
+  if (result.success) {
+    emits("submit", result.data);
+  }
 };
+
+let i = 0;
+let array1 = [];
+let array2 = [];
+let array3 = [];
+
+const projectsOptions = new Array(11).fill({}).reduce(() => {
+  array1.push({ value: `${crypto.randomUUID()}`, label: `project-${i++}` });
+  return array1;
+});
+const statusOptions = new Array(11).fill({}).reduce(() => {
+  array2.push({ value: `${crypto.randomUUID()}`, label: `status-${i++}` });
+  return array2;
+});
+const priorityOptions = new Array(11).fill({}).reduce(() => {
+  array3.push({ value: `${crypto.randomUUID()}`, label: `priority-${i++}` });
+  return array3;
+});
 </script>
 <template>
   <form flex="~ col" text="white" gap="4">
@@ -19,31 +44,19 @@ const validate = () => {
       v-model="form.projectUuid"
       name="task-project"
       label="Проект"
-      :options="[
-        { value: 'project-1', label: 'project-1' },
-        { value: 'project-2', label: 'project-2' },
-        { value: 'project-3', label: 'project-3' },
-      ]"
+      :options="projectsOptions"
     />
     <BaseSelect
       v-model="form.statusUuid"
       label="Статус"
       name="task-status"
-      :options="[
-        { value: 'status-1', label: 'status-1' },
-        { value: 'status-2', label: 'status-2' },
-        { value: 'status-3', label: 'status-3' },
-      ]"
+      :options="statusOptions"
     />
     <BaseSelect
       v-model="form.priorityUuid"
       label="Приоритет"
       name="task-priority"
-      :options="[
-        { value: 'priority-1', label: 'priority-1' },
-        { value: 'priority-2', label: 'priority-2' },
-        { value: 'priority-3', label: 'priority-3' },
-      ]"
+      :options="priorityOptions"
     />
     <BaseInput v-model="form.name" name="task-name" label="Название задачи:" />
     <BaseTextarea v-model="form.description" name="task-descritpion" label="Описание:" />
@@ -53,6 +66,6 @@ const validate = () => {
       name="task-estimated-minutes"
       label="Оценка в минутах:"
     />
-    <Button @click="validate" type="button" mt="5">Создать</Button>
+    <Button type="button" mt="5" @click="submit">Создать</Button>
   </form>
 </template>

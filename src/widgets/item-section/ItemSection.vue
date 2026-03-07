@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, shallowRef } from "vue";
+import { computed, reactive, shallowRef } from "vue";
 import { ISection } from "@/entities/section/model/types";
 import { useSectionStore } from "@/entities/section/model/section";
 import { useTaskStore } from "@/entities/task/model/task";
@@ -88,6 +88,6 @@ const addTaskModal = shallowRef(false);
     </div>
   </div>
   <Modal title="Добавить задачу" v-model="addTaskModal" p="5">
-    <FormTask />
+    <FormTask @submit="(taskData) => addTask(taskData.projectUuid, taskData)" />
   </Modal>
 </template>

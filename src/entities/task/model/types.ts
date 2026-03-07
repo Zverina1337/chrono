@@ -5,13 +5,10 @@ export type ITask = z.infer<typeof TaskSchema>;
 export type ITaskCreateSchema = z.infer<typeof createTaskSchema>;
 
 export interface ITaskActions {
-  addTask: (
-    sectionUuid: ITask["statusUuid"],
-    taskData: Omit<ITask, "uuid" | "sectionUuid">,
-  ) => void;
-  getTasks: (sectionUuid: ITask["statusUuid"]) => ITask[];
-  deleteTask: (sectionUuid: ITask["statusUuid"], uuid: ITask["uuid"]) => void;
-  moveTask: (task: ITask, toSectionUuid: ITask["statusUuid"]) => void;
+  addTask: (projectUuid: ITask["projectUuid"], taskData: ITaskCreateSchema) => void;
+  getTasks: (projectUuid: ITask["projectUuid"]) => ITask[];
+  deleteTask: (projectUuid: ITask["projectUuid"], uuid: ITask["uuid"]) => void;
+  moveTask: (task: ITask, toProjectUuid: ITask["projectUuid"]) => void;
   swapTask: (task: ITask, targetTask: ITask) => void;
-  getTask: (sectionUuid: ITask["statusUuid"], uuid: ITask["uuid"]) => ITask | null;
+  getTask: (projectUuid: ITask["projectUuid"], uuid: ITask["uuid"]) => ITask | null;
 }

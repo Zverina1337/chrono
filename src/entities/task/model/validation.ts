@@ -4,7 +4,7 @@ import { ITaskCreateSchema } from "./types";
 export const TaskSchema = z.object({
   uuid: z.uuid({ version: "v4" }),
   statusUuid: z.uuid({ version: "v4" }).nullable(),
-  projectUuid: z.uuid({ version: "v4" }).nullable(),
+  projectUuid: z.uuid({ version: "v4" }),
   priorityUuid: z.uuid({ version: "v4" }).nullable(),
   name: z.string().max(255),
   description: z.string().max(255),
@@ -25,7 +25,7 @@ export const createTaskSchema = TaskSchema.omit({
 
 export const defaultCreateTaskSchema = (): ITaskCreateSchema => ({
   statusUuid: null,
-  projectUuid: null,
+  projectUuid: "",
   priorityUuid: null,
   name: "",
   description: "",

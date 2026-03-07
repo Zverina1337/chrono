@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, reactive, shallowRef } from "vue";
+import { computed, shallowRef } from "vue";
 import { ISection } from "@/entities/section/model/types";
 import { useSectionStore } from "@/entities/section/model/section";
 import { useTaskStore } from "@/entities/task/model/task";

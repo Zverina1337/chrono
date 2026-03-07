@@ -12,7 +12,7 @@ export const useErrorHandler = () => {
   const InternalError = ApiError(AppErrorTypes.Internal);
   const LockError = ApiError(AppErrorTypes.LockError);
 
-  const handleError = (error: unknown) => {
+  const handleError = <T>(error: unknown, fallback: T): T => {
     if (isAppError(error)) {
       switch (error.type) {
         case "NotFound":
@@ -31,8 +31,9 @@ export const useErrorHandler = () => {
           LockError("Что-то пошло не так");
           break;
       }
+      return fallback;
     } else {
-      return error;
+      return fallback;
     }
   };
 

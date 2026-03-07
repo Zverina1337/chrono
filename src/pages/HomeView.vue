@@ -3,10 +3,18 @@ import { storeToRefs } from "pinia";
 import { useSectionStore } from "@/entities/section/model/section";
 import ListSection from "@/entities//section/ui/ListSection.vue";
 import Button from "@/shared/ui/Button.vue";
+import { onMounted } from "vue";
+import { useProjectStore } from "@/entities/projects/model/project";
 
 const sectionStore = useSectionStore();
+const projectstore = useProjectStore();
 const { sections } = storeToRefs(sectionStore);
 const { addSection } = sectionStore;
+
+onMounted(() => {
+  projectstore.fetchProjects();
+  console.log(projectstore.projects);
+});
 </script>
 <template>
   <ListSection :sections />

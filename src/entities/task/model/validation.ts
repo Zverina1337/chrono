@@ -1,5 +1,5 @@
 import * as z from "zod";
-import { ITaskCreateSchema } from "./types";
+import { ITaskCreate } from "./types";
 
 export const TaskSchema = z.object({
   uuid: z.uuid({ version: "v4" }),
@@ -23,7 +23,7 @@ export const createTaskSchema = TaskSchema.omit({
   position: true,
 });
 
-export const defaultCreateTaskSchema = (): ITaskCreateSchema => ({
+export const defaultCreateTaskSchema = (): ITaskCreate => ({
   statusUuid: null,
   projectUuid: "",
   priorityUuid: null,

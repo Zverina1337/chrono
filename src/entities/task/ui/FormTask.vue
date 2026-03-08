@@ -2,17 +2,17 @@
 import { reactive } from "vue";
 import Button from "@/shared/ui/Button.vue";
 import BaseInput from "@/shared/ui/BaseInput.vue";
-import { defaultCreateTaskSchema, createTaskSchema } from "../model/validation";
+import { defaultCreateTaskSchema, CreateTaskSchema } from "../model/validation";
 import * as z from "zod";
 import BaseTextarea from "@/shared/ui/BaseTextarea.vue";
 import BaseSelect from "@/shared/ui/BaseSelect.vue";
-import { ITaskCreateSchema } from "../model/types";
+import { ITaskCreate } from "../model/types";
 
-const emits = defineEmits<{ submit: [form: ITaskCreateSchema] }>();
+const emits = defineEmits<{ submit: [form: ITaskCreate] }>();
 
 const form = reactive(defaultCreateTaskSchema());
 const submit = () => {
-  const result = z.safeParse(createTaskSchema, form);
+  const result = z.safeParse(CreateTaskSchema, form);
   console.log(result);
 
   if (result.success) {

@@ -16,7 +16,7 @@ export const TaskSchema = z.object({
   updatedAt: z.iso.datetime(),
 });
 
-export const createTaskSchema = TaskSchema.omit({
+export const CreateTaskSchema = TaskSchema.omit({
   uuid: true,
   createdAt: true,
   updatedAt: true,

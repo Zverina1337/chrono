@@ -33,6 +33,7 @@ export const useErrorHandler = () => {
       }
       return fallback;
     } else {
+      console.error(error);
       return fallback;
     }
   };

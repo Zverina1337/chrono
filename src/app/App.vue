@@ -1,9 +1,7 @@
-<script setup lang="ts">
-import HomeView from "@/pages/HomeView.vue";
-</script>
+<script setup lang="ts"></script>
 
 <template>
   <main h="screen" bg="gray-900" p="2" flex="~" gap="2">
-    <HomeView />
+    <RouterView />
   </main>
 </template>

@@ -13,7 +13,7 @@ const getProjects = async (): Promise<IProject[] | []> => {
 };
 const createProject = async (data: IProjectCreate): Promise<IProject | undefined> => {
   try {
-    const result = await invoke<IProject>(IProjectCommands.CREATE, data);
+    const result = await invoke<IProject>(IProjectCommands.CREATE, { data });
     return result;
   } catch (error) {
     return handleError(error, undefined);

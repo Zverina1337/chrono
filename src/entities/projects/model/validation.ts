@@ -15,3 +15,8 @@ export const CreateProjectSchema = ProjectSchema.omit({
   createdAt: true,
   updatedAt: true,
 });
+
+export const defaultCreateProjectSchema = () => ({
+  name: "",
+  description: "",
+});

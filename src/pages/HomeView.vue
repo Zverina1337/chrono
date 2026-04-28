@@ -10,5 +10,7 @@ onMounted(() => {
 });
 </script>
 <template>
-  <ListProject />
+  <main h="screen" bg="gray-900" p="2" flex="~" gap="2">
+    <ListProject />
+  </main>
 </template>

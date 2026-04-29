@@ -17,7 +17,7 @@ import { icons } from "@/shared/types/icons";
         flex="~"
         items="center"
         justify="center"
-        text="primary sm"
+        text="white-base sm"
         font="600"
         bg="white-emerald"
         dark:bg="dark-emerald"
@@ -52,7 +52,13 @@ import { icons } from "@/shared/types/icons";
           dark:hover:bg-dark-emerald
           transition-colors
         >
-          <span :class="icons[route.icon]" h="1/2" w="1/2" style="display: block" text="primary" />
+          <span
+            :class="icons[route.icon]"
+            h="1/2"
+            w="1/2"
+            style="display: block"
+            text="white-base"
+          />
         </RouterLink>
       </nav>
       <nav
@@ -80,7 +86,13 @@ import { icons } from "@/shared/types/icons";
           dark:hover:bg-dark-emerald
           transition-colors
         >
-          <span :class="icons['settings']" h="1/2" w="1/2" style="display: block" text="primary" />
+          <span
+            :class="icons['settings']"
+            h="1/2"
+            w="1/2"
+            style="display: block"
+            text="white-base"
+          />
         </RouterLink>
       </nav>
     </aside>

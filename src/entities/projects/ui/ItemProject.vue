@@ -5,8 +5,7 @@ const props = defineProps<{ project: IProject }>();
 </script>
 
 <template>
-  <article w="full" max-h="8rem" h="full" rounded="~" bg="gray-700" p="5" flex="~ col" gap="4">
-    <h2 text="white 2xl">{{ project.name }}</h2>
-    <p>{{ project.description }}</p>
+  <article bg="white-surface-card" shadow rounded-md p="1">
+    <h3 text="primary lg">{{ project.name }}</h3>
   </article>
 </template>

@@ -1,37 +1,48 @@
-# TODO
+# Chrono — Plan
 
-## Drag'n'Drop Composable
+## Приоритеты
 
-### Задача
-Вынести всю логику Drag'n'Drop из компонентов в composable `useDragAndDrop`.
+### 1. Дизайн-система
 
-### Требования
-- Composable хранит **Map<string, boolean>** где ключ — это ID элемента (секции/задачи), значение — состояние dragging (true/false)
-- Можно получить состояние конкретного элемента по его ID: `isDragging(id)` → `boolean`
-- Можно установить состояние: `setDragging(id, value)`
-- Composable должен предоставлять обработчики событий (dragstart, dragend, dragenter, dragleave, drop)
-- Использовать на `ItemSection` и `ListSection` (и потенциально на `ItemTask`)
+- [ ] Выгрузить токены из Figma и обновить `uno.config.ts`
+- [ ] Убедиться, что все существующие компоненты используют токены, а не хардкод (`gray-700`, `indigo-500` и т.д.)
+- [ ] Убрать attributify и подогнать компоненты под дизайн систему
 
-### Зачем Map вместо одного boolean
-- Позволяет отслеживать состояние каждого элемента независимо
-- Несколько элементов могут быть в состоянии drag одновременно (например, при быстрых перетаскиваниях)
-- Можно стилизовать конкретный drop-target, не затрагивая остальные
+### 2. Базовые компоненты (`shared/ui`)
 
-### Примерный API composable
-```
-useDragAndDrop() → {
-  draggingMap: Map<string, boolean>    // реактивная карта состояний
-  isDragging(id: string): boolean      // получить состояние по ID
-  setDragging(id: string, val: boolean) // установить состояние
-  onDragStart(id, event)               // обработчик dragstart
-  onDragEnd(id, event)                 // обработчик dragend
-  onDragEnter(id, event)               // обработчик dragenter
-  onDragLeave(id, event)               // обработчик dragleave
-  onDrop(id, event, callback)          // обработчик drop с пользовательским callback
-}
-```
+Переписать под токены дизайн-системы, добавить варианты и пропсы:
 
-### Где использовать
-- `ItemSection.vue` — убрать локальный `isDragging`, заменить на composable
-- `ItemTask.vue` — убрать drag-логику, подключить composable
-- `ListSection.vue` — при необходимости для section-level drag
+- [ ] `Button` — варианты (primary, ghost, danger), размеры, disabled, loading
+- [ ] `BaseInput` — привести под токены
+- [ ] `BaseTextarea` — привести под токены
+- [ ] `BaseSelect` — убрать `appearance: base-select` (экспериментальный CSS), переделать
+- [ ] `Modal` — убрать зависимость от Button для кнопки закрытия
+- [ ] `Badge` / `Tag` — для меток и статусов
+- [ ] `Checkbox` / `Toggle` — выполнение задач
+- [ ] `Spinner` / `Skeleton` — состояния загрузки
+
+### 3. Страницы — наполнить содержимым
+
+#### Первая цель: страница задач по проекту
+
+Суть: пользователь открывает проект и видит список задач внутри него.
+Это текущий `ProjectView` — канбан по статусам.
+Нужно наполнить реальным содержимым: карточки задач, колонки статусов, добавление задачи.
+
+#### Дальше по порядку:
+
+- [ ] `HomeView` — список всех задач с фильтрами (сегодня / неделя / все)
+- [ ] `TaskDetail` — полный вид задачи: подзадачи, метки, приоритет, тайм-записи
+- [ ] `Reports` — время по проектам и меткам (нужно для смысла тайм-трекера)
+- [ ] `Settings` — минимально: тема
+
+---
+
+## Отложено (выполнить позже)
+
+### Drag'n'Drop Composable
+
+Вынести логику из компонентов в `useDragAndDrop`.
+
+- Composable: `draggingMap: Map<string, boolean>`, методы `isDragging`, `setDragging`, обработчики событий
+- Применить в: `ItemSection.vue`, `ItemTask.vue`, `ListSection.vue`

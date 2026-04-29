@@ -18,6 +18,13 @@ export default defineConfig({
           font-style: normal;
         }
 
+        @font-face {
+          font-family: 'Geist';
+          src: url('/fonts/Geist-Medium.ttf') format('truetype');
+          font-weight: 500;
+          font-style: normal;
+        }
+
         * {
           font-family: 'Geist'
         }
@@ -39,6 +46,12 @@ export default defineConfig({
           pill: "rgba(18,18,26,.90)",
           card: "rgba(255,255,255,.04)",
         },
+        // text
+        primary: "rgba(255,255,255,.92)",
+        secondary: "rgba(255,255,255,.82)",
+        tertiary: "rgba(255,255,255,.45)",
+        muted: "rgba(255,255,255,.28)",
+        disabled: "rgba(255,255,255,.18)",
       },
       white: {
         base: "#f0f0f3",
@@ -53,14 +66,13 @@ export default defineConfig({
           pill: "rgba(18,18,26,.90)",
           card: "#ffffff",
         },
+        // text
+        primary: "#1a1a22",
+        secondary: "#3a3a42",
+        tertiary: "#7a7a85",
+        muted: "#9898a2",
+        disabled: "#b0b0ba",
       },
-
-      // text
-      primary: "rgba(255,255,255,.92)",
-      secondary: "rgba(255,255,255,.82)",
-      tertiary: "rgba(255,255,255,.45)",
-      muted: "rgba(255,255,255,.28)",
-      disabled: "rgba(255,255,255,.18)",
     },
     borderRadius: {
       xs: "4px",

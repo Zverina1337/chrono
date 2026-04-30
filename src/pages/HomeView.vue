@@ -16,63 +16,45 @@ const filters = ref([
 ]);
 
 const badges = ref([
-  { name: "backend" },
-  { name: "frontend" },
-  { name: "bug" },
-  { name: "design" },
-  { name: "docs" },
+  { name: "backend", color: "bg-tag-backend-fg" },
+  { name: "frontend", color: "bg-tag-frontend-fg" },
+  { name: "bug", color: "bg-tag-bug-fg" },
+  { name: "design", color: "bg-tag-design-fg" },
+  { name: "docs", color: "bg-tag-docs-fg" },
 ]);
 </script>
 <template>
-  <main h="screen" flex="~" gap="2">
+  <main class="flex h-screen gap-2">
     <aside
-      flex="~ col"
-      gap="2"
-      bg="white-surface-glass"
-      p-5
-      w="1/5"
-      relative
-      border-r="1px solid white-secondary/10"
+      class="bg-surface-sidebar border-r-border sidebar-w relative
+        flex flex-col gap-2 border-r p-5"
     >
-      <div flex="~ col" gap="4" border-b="1 solid white-secondary/10" pb="6">
-        <h2 text="white-muted xs" tracking-wide uppercase font-medium>Фильтры</h2>
-        <div flex="~ col" gap="3">
+      <div class="border-b-border flex flex-col gap-4 border-b pb-6">
+        <h2 class="text-label">Фильтры</h2>
+        <div class="flex flex-col gap-3">
           <p
             v-for="filter in filters"
-            text="white-tertiary sm"
-            tracking-wide
-            flex="~"
-            justify="between"
-            items="center"
+            class="text-body-muted flex items-center justify-between
+              font-medium"
           >
             <span>{{ filter.name }}</span>
             <span
-              text="xs"
-              w="5"
-              h="4"
-              bg="white-surface/10"
-              flex="~"
-              rounded="xs"
-              justify="center"
-              items="center"
+              class="flex h-4 w-5 items-center justify-center
+                rounded-xs bg-black/10 text-xs"
               >{{ filter.count }}</span
             >
           </p>
         </div>
       </div>
       <ListProject />
-      <div absolute bottom-2 flex="~ col" gap="4">
-        <h2 text="white-muted xs" tracking-wide uppercase font-medium>Метки</h2>
-        <div flex="~ col" gap="2" w="full">
+      <div class="absolute bottom-4 flex flex-col gap-4">
+        <h2 class="text-label">Метки</h2>
+        <div class="flex w-full flex-col gap-2">
           <p
             v-for="badge in badges"
-            text="white-tertiary sm"
-            tracking-wide
-            flex="~"
-            items="center"
-            gap="2"
+            class="text-body flex items-center gap-2"
           >
-            <span bg-white-emerald w="2" h="2" rounded-full />
+            <span :class="badge.color" class="h-2 w-2 rounded-full" />
             <span>{{ badge.name }}</span>
           </p>
         </div>

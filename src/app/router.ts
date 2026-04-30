@@ -12,13 +12,23 @@ interface AppRoute {
 }
 
 export const routes: AppRoute[] = [
-  { path: "/", component: HomeView, name: "Tasks", icon: "formatList" },
-  { path: "/projects", component: ProjectView, name: "Projects", icon: "formatList" },
+  {
+    path: "/",
+    component: HomeView,
+    name: "Tasks",
+    icon: "formatList",
+  },
+  {
+    path: "/projects",
+    component: ProjectView,
+    name: "Projects",
+    icon: "formatList",
+  },
 ];
 
 export const router = createRouter({
   linkActiveClass: "active",
-  linkExactActiveClass: "shadow-glow dark:bg-dark-emerald bg-white-emerald/50",
+  linkExactActiveClass: "rail-item-active",
   history: createMemoryHistory(),
   routes,
 });

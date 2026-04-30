@@ -35,23 +35,23 @@ useClickOutside(container, () => (editableId.value = ""));
 const name = crypto.randomUUID();
 </script>
 <template>
+  <!-- TODO: сделать его в соответствии с дизайном -->
+
   <div ref="container">
     <span v-show="editableId !== id" @click="handleClick">
       <slot></slot>
     </span>
-    <span v-show="editableId === id" flex="~" justify="between" items="center" gap="4">
+    <span
+      v-show="editableId === id"
+      class="flex items-center justify-between gap-4"
+    >
       <input
         v-model="editableValue"
         ref="input"
-        class="placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500"
-        px="3.5"
-        py="2"
-        bg="white/5"
-        rounded="md"
-        display="block"
-        w="full"
-        text="white base"
-        outline="1 -~-offset-1 white/10"
+        class="block w-full rounded-md bg-gray-700 px-3.5 py-2
+          text-base text-white outline outline-1 outline-white/10
+          placeholder:text-gray-500 focus:outline-2
+          focus:-outline-offset-2 focus:outline-indigo-500"
         type="text"
         :name
         @keydown.enter="editableId = ''"

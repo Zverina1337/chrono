@@ -1,15 +1,16 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+interface Props {
+  variant?: "primary" | "secondary" | "ghost" | "icon";
+  size?: "sm" | "md" | "lg";
+}
+withDefaults(defineProps<Props>(), {
+  variant: "primary",
+  size: "md",
+});
+</script>
 <template>
-  <button
-    class="hover:bg-indigo-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500"
-    bg="indigo-500"
-    transition="colors"
-    text="white"
-    p="2"
-    rounded="lg"
-    flex="~ items-center justify-around"
-    outline="1 -~-offset-1 white/10 solid"
-  >
+  <button :class="`btn-${variant} btn-${size}`" class="btn">
     <slot></slot>
   </button>
 </template>
+<!-- TODO: Dynamic string class problem UnoCss base( -->

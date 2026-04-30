@@ -31,7 +31,9 @@ const handleDrop = (event: DragEvent) => {
   isDragging.value = false;
   const target = event.target as HTMLElement | null;
   if (!event.dataTransfer || !target) return;
-  const task = JSON.parse(event.dataTransfer.getData("application/json")) as ITask;
+  const task = JSON.parse(
+    event.dataTransfer.getData("application/json"),
+  ) as ITask;
   moveTask(task, props.section.uuid);
 };
 
@@ -48,36 +50,36 @@ const addTaskModal = shallowRef(false);
 </script>
 
 <template>
-  <div w="full" h="full" rounded="~" bg="gray-700" p="5" flex="~ col" gap="4">
-    <div flex="~ col" gap="4">
-      <div flex="~" items="center" justify="between">
+  <div
+    class="flex h-full w-full flex-col gap-4 rounded bg-gray-700 p-5
+      text-white"
+  >
+    <div class="flex flex-col gap-4">
+      <div class="flex items-center justify-between">
         <InlineEdit :id="section.uuid" v-model="sectionName">
-          <h2 text="2xl gray-300" font="medium">
+          <h2 class="gray-300 text-2xl font-medium">
             {{ section?.name }}
           </h2>
         </InlineEdit>
+        <!-- TODO: Подумать над дизайном -->
         <Button
-          rounded="full"
-          text="2xl"
-          bg="white"
-          class="i-material-symbols-light:cancel-outline"
+          class="i-mdi:window-close text-md rounded-full bg-white"
           @click="removeSection(section.uuid)"
         />
       </div>
-      <Button px="2" py="1" @click="addTaskModal = true"> Добавить задачу </Button>
+      <Button class="px-2 py-1" @click="addTaskModal = true">
+        Добавить задачу
+      </Button>
     </div>
     <div
       :class="
         isDragging
-          ? 'border-green-500 border-dashed border-2 bg-green-500/10 rounded-lg'
-          : 'border-green-500 border-dashed border-none bg-transparent'
+          ? `rounded-lg border-2 border-dashed border-green-500
+            bg-green-500/10`
+          : `border-dashed border-none border-green-500
+            bg-transparent`
       "
-      flex="~ col"
-      gap="4"
-      h="full"
-      w="full"
-      p="1"
-      transition="colors"
+      class="flex h-full w-full flex-col gap-4 p-1 transition-colors"
       @dragenter="() => (isDragging = true)"
       @dragend="() => (isDragging = false)"
       @dragleave="handleDragLeave"
@@ -88,6 +90,8 @@ const addTaskModal = shallowRef(false);
     </div>
   </div>
   <Modal title="Добавить задачу" v-model="addTaskModal" p="5">
-    <FormTask @submit="(taskData) => addTask(taskData.projectUuid, taskData)" />
+    <FormTask
+      @submit="(taskData) => addTask(taskData.projectUuid, taskData)"
+    />
   </Modal>
 </template>

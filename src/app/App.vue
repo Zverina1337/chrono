@@ -4,98 +4,44 @@ import { icons } from "@/shared/types/icons";
 </script>
 
 <template>
-  <main flex="~" w="full">
+  <main class="flex w-full">
     <aside
-      w="70px"
-      dark:color="dark-surface"
-      bg="white-surface"
-      flex="~ col"
-      items="center"
-      relative
+      class="nav-w bg-surface-nav relative flex flex-col items-center"
     >
       <div
-        flex="~"
-        items="center"
-        justify="center"
-        text="white-base sm"
-        font="600"
-        bg="white-emerald"
-        dark:bg="dark-emerald"
-        rounded="xl"
-        shadow-glow
-        w="10"
-        h="10"
-        my="2"
+        class="text-ink-inverse bg-brand-500 shadow-focus font-500
+          mt-2 mb-4 flex h-10 w-10 items-center justify-center
+          rounded-md text-xl"
       >
         C
       </div>
       <nav
-        flex="~ col"
-        items="center"
-        gap="2"
-        border="1px solid white-base/15"
-        rounded="lg"
-        bg="white-base/5"
-        p-1.5
+        class="flex flex-col items-center gap-2 rounded-lg border
+          border-white/10 bg-white/5"
       >
         <RouterLink
           v-for="route in routes"
           :to="route.path"
-          w="40px"
-          h="40px"
-          flex="~"
-          justify="center"
-          items="center"
-          rounded="md"
-          bg="white-base/25"
-          hover:bg-white-emerald
-          dark:hover:bg-dark-emerald
-          transition-colors
+          class="rail-item"
         >
           <span
             :class="icons[route.icon]"
-            h="1/2"
-            w="1/2"
-            style="display: block"
-            text="white-base"
+            class="block h-1/2 w-1/2"
           />
         </RouterLink>
       </nav>
       <nav
-        flex="~"
-        items="center"
-        justify="center"
-        gap="2"
-        border="1px solid white-base/15"
-        rounded="lg"
-        bg="white-base/5"
-        p-1.5
-        absolute
-        bottom-4
+        class="absolute bottom-4 flex flex-col items-center gap-2
+          rounded-lg border border-white/10 bg-white/5"
       >
-        <RouterLink
-          to="/settings"
-          w="40px"
-          h="40px"
-          flex="~"
-          justify="center"
-          items="center"
-          rounded="md"
-          bg="white-base/25"
-          hover:bg-white-emerald
-          dark:hover:bg-dark-emerald
-          transition-colors
-        >
+        <RouterLink to="/settings" class="rail-item">
           <span
             :class="icons['settings']"
-            h="1/2"
-            w="1/2"
-            style="display: block"
-            text="white-base"
+            class="block h-1/2 w-1/2"
           />
         </RouterLink>
       </nav>
     </aside>
-    <RouterView w="full" dark:bg="dark-base" dark:text="zinc-100" bg="white-base" />
+    <RouterView class="bg-surface-canvas w-full" />
   </main>
 </template>

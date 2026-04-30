@@ -24,7 +24,11 @@ defineOptions({
 
 const props = defineProps<Props>();
 const emits = defineEmits<{ "update:modelValue": [value: T] }>();
-const { class: rootClass, style: rootStyle, ...selectAttrs }: SelectHTMLAttributes = useAttrs();
+const {
+  class: rootClass,
+  style: rootStyle,
+  ...selectAttrs
+}: SelectHTMLAttributes = useAttrs();
 
 const modelValue = computed({
   get: () => props.modelValue,
@@ -34,18 +38,17 @@ const modelValue = computed({
 
 <template>
   <div :class="rootClass" :style="rootStyle">
-    <label :class="labelClass" :for="name" v-if="label">{{ label }}</label>
+    <label :class="labelClass" :for="name" v-if="label">{{
+      label
+    }}</label>
+    <!-- TODO: Собрать шорткат на этот инпут и сделать его в соответствии с дизайном -->
+
     <select
       v-model="modelValue"
       v-bind="selectAttrs"
       :class="['select', selectClass]"
-      px="3.5"
-      py="2"
-      bg="gray-700"
-      rounded="md"
-      display="block"
-      w="full"
-      text="white base"
+      class="block w-full rounded-md bg-gray-700 px-3.5 py-2 text-base
+        text-white"
       :name
       :id="name"
       :aria-describedby="error ? `${name}-error` : undefined"
@@ -57,7 +60,12 @@ const modelValue = computed({
         :key="`${option.value}-${index}`"
       />
     </select>
-    <p v-if="error" :class="errorClass" :id="`${name}-error`" aria-live="assertive">
+    <p
+      v-if="error"
+      :class="errorClass"
+      :id="`${name}-error`"
+      aria-live="assertive"
+    >
       {{ error }}
     </p>
   </div>

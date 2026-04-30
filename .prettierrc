@@ -2,5 +2,10 @@
   "semi": true,
   "singleQuote": false,
   "tabWidth": 2,
-  "printWidth": 100
+  "printWidth": 70,
+  "plugins": [
+    "prettier-plugin-tailwindcss",
+    "prettier-plugin-classnames",
+    "prettier-plugin-merge"
+  ]
 }

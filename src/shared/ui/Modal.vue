@@ -3,7 +3,9 @@ import { useTemplateRef, watchEffect } from "vue";
 import Button from "@/shared/ui/Button.vue";
 
 const props = defineProps<{ modelValue: boolean; title: string }>();
-const emits = defineEmits<{ "update:modelValue": [value: boolean] }>();
+const emits = defineEmits<{
+  "update:modelValue": [value: boolean];
+}>();
 const modal = useTemplateRef("dialog");
 
 const onBackdropClick = (event: Event) => {
@@ -20,15 +22,23 @@ watchEffect(() => {
 </script>
 
 <template>
-  <dialog ref="dialog" @close="close" @click="onBackdropClick" rounded="xl" bg="gray-800">
-    <div px="2.5" pb="2" w="full" h="full" max-w="xl">
-      <div flex="~" justify="between" items="center" gap="4" pb="5">
-        <h2 text="white 2xl" font="medium">{{ title }}</h2>
+  <!-- TODO: сделать его в соответствии с дизайном -->
+
+  <dialog
+    ref="dialog"
+    @close="close"
+    @click="onBackdropClick"
+    class="rounded-xl bg-gray-800"
+  >
+    <div class="h-full w-full max-w-xl px-2.5 pb-2">
+      <div class="flex items-center justify-between gap-4 pb-5">
+        <!-- TODO: Подумать стоит ли тут добавлять шорткат -->
+        <h2 class="text-2xl font-medium text-white">
+          {{ title }}
+        </h2>
+        <!-- TODO: Подумать над дизайном -->
         <Button
-          rounded="full"
-          text="2xl"
-          bg="white"
-          class="i-material-symbols-light:cancel-outline"
+          class="i-mdi:window-close text-md rounded-full bg-white"
           @click="close"
         />
       </div>

@@ -2,7 +2,10 @@
 import { reactive } from "vue";
 import Button from "@/shared/ui/Button.vue";
 import BaseInput from "@/shared/ui/BaseInput.vue";
-import { defaultCreateTaskSchema, CreateTaskSchema } from "../model/validation";
+import {
+  defaultCreateTaskSchema,
+  CreateTaskSchema,
+} from "../model/validation";
 import * as z from "zod";
 import BaseTextarea from "@/shared/ui/BaseTextarea.vue";
 import BaseSelect from "@/shared/ui/BaseSelect.vue";
@@ -26,20 +29,29 @@ let array2 = [];
 let array3 = [];
 
 const projectsOptions = new Array(11).fill({}).reduce(() => {
-  array1.push({ value: `${crypto.randomUUID()}`, label: `project-${i++}` });
+  array1.push({
+    value: `${crypto.randomUUID()}`,
+    label: `project-${i++}`,
+  });
   return array1;
 });
 const statusOptions = new Array(11).fill({}).reduce(() => {
-  array2.push({ value: `${crypto.randomUUID()}`, label: `status-${i++}` });
+  array2.push({
+    value: `${crypto.randomUUID()}`,
+    label: `status-${i++}`,
+  });
   return array2;
 });
 const priorityOptions = new Array(11).fill({}).reduce(() => {
-  array3.push({ value: `${crypto.randomUUID()}`, label: `priority-${i++}` });
+  array3.push({
+    value: `${crypto.randomUUID()}`,
+    label: `priority-${i++}`,
+  });
   return array3;
 });
 </script>
 <template>
-  <form flex="~ col" text="white" gap="4">
+  <form class="flex flex-col gap-4 text-white">
     <BaseSelect
       v-model="form.projectUuid"
       name="task-project"
@@ -58,14 +70,29 @@ const priorityOptions = new Array(11).fill({}).reduce(() => {
       name="task-priority"
       :options="priorityOptions"
     />
-    <BaseInput v-model="form.name" name="task-name" label="Название задачи:" />
-    <BaseTextarea v-model="form.description" name="task-descritpion" label="Описание:" />
-    <BaseInput v-model="form.dueDate" name="task-due-date" label="Срок окончания:" type="date" />
+    <BaseInput
+      v-model="form.name"
+      name="task-name"
+      label="Название задачи:"
+    />
+    <BaseTextarea
+      v-model="form.description"
+      name="task-descritpion"
+      label="Описание:"
+    />
+    <BaseInput
+      v-model="form.dueDate"
+      name="task-due-date"
+      label="Срок окончания:"
+      type="date"
+    />
     <BaseInput
       v-model.number="form.estimatedMinutes"
       name="task-estimated-minutes"
       label="Оценка в минутах:"
     />
-    <Button type="button" mt="5" @click="submit">Создать</Button>
+    <Button class="mt-5" type="button" @click="submit"
+      >Создать</Button
+    >
   </form>
 </template>

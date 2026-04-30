@@ -8,10 +8,18 @@ const sectionStore = useSectionStore();
 const { sections } = storeToRefs(sectionStore);
 </script>
 <template>
-  <section v-if="sections.length !== 0" w="full" flex="~" gap="2">
-    <ItemSection :key="section.uuid" :section v-for="section in sections" />
+  <section v-if="sections.length !== 0" class="flex w-full gap-2">
+    <ItemSection
+      :key="section.uuid"
+      :section
+      v-for="section in sections"
+    />
   </section>
-  <section v-else h="full" w="full" flex="~ col" gap="4" items="center" justify="center">
-    <h3 text="2xl white">У вас нет секций.</h3>
+  <section
+    v-else
+    class="flex h-full w-full flex-col items-center justify-center
+      gap-4"
+  >
+    <h3 class="text-2xl text-white">У вас нет секций.</h3>
   </section>
 </template>

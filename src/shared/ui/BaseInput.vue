@@ -11,7 +11,13 @@ interface Props {
   name: string;
   type?: Exclude<
     InputHTMLAttributes["type"],
-    "button" | "checkbox" | "radio" | "range" | "reset" | "search" | "submit"
+    | "button"
+    | "checkbox"
+    | "radio"
+    | "range"
+    | "reset"
+    | "search"
+    | "submit"
   >;
   error?: string;
   label?: string;
@@ -23,7 +29,11 @@ defineOptions({
 
 const props = defineProps<Props>();
 const emits = defineEmits<{ "update:modelValue": [value: T] }>();
-const { class: rootClass, style: rootStyle, ...inputAttrs }: InputHTMLAttributes = useAttrs();
+const {
+  class: rootClass,
+  style: rootStyle,
+  ...inputAttrs
+}: InputHTMLAttributes = useAttrs();
 
 const modelValue = computed({
   get: () => props.modelValue,
@@ -33,27 +43,30 @@ const modelValue = computed({
 
 <template>
   <div :class="rootClass" :style="rootStyle">
-    <label :class="labelClass" :for="name" v-if="label">{{ label }}</label>
+    <label :class="labelClass" :for="name" v-if="label">{{
+      label
+    }}</label>
+    <!-- TODO: Собрать шорткат на этот инпут и сделать его в соответствии с дизайном -->
     <input
       v-model="modelValue"
       v-bind="inputAttrs"
       :type="type ?? 'text'"
-      class="placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500"
-      px="3.5"
-      py="2"
-      bg="gray-700"
-      rounded="md"
-      display="block"
-      w="full"
-      text="white base"
-      outline="1 -~-offset-1 white/10 solid"
+      class="block w-full rounded-md bg-gray-700 px-3.5 py-2 text-base
+        text-white outline outline-1 outline-white/10
+        placeholder:text-gray-500 focus:outline-2
+        focus:-outline-offset-2 focus:outline-indigo-500"
       :class="inputClass"
       :name
       :id="name"
       :aria-describedby="error ? `${name}-error` : undefined"
       :aria-invalid="error ? true : undefined"
     />
-    <p v-if="error" :class="errorClass" :id="`${name}-error`" aria-live="assertive">
+    <p
+      v-if="error"
+      :class="errorClass"
+      :id="`${name}-error`"
+      aria-live="assertive"
+    >
       {{ error }}
     </p>
   </div>

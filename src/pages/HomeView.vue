@@ -2,11 +2,11 @@
 import { onMounted, ref } from "vue";
 import { useProjectStore } from "@/entities/projects/model/project";
 import ListProject from "@/entities/projects/ui/ListProject.vue";
+import SectionProject from "@/entities/projects/ui/SectionProject.vue";
 const projectstore = useProjectStore();
 
 onMounted(() => {
   projectstore.fetchProjects();
-  console.log(projectstore.projects);
 });
 
 const filters = ref([
@@ -22,6 +22,8 @@ const badges = ref([
   { name: "design", color: "bg-tag-design-fg" },
   { name: "docs", color: "bg-tag-docs-fg" },
 ]);
+
+const currentProject = ref();
 </script>
 <template>
   <main class="flex h-screen gap-2">
@@ -46,7 +48,7 @@ const badges = ref([
           </p>
         </div>
       </div>
-      <ListProject />
+      <ListProject @get-id="(uuid) => (currentProject = uuid)" />
       <div class="absolute bottom-4 flex flex-col gap-4">
         <h2 class="text-label">Метки</h2>
         <div class="flex w-full flex-col gap-2">
@@ -60,13 +62,6 @@ const badges = ref([
         </div>
       </div>
     </aside>
-    <section>
-      <div>
-        <div>
-          <h1>Chrono</h1>
-        </div>
-      </div>
-      <div></div>
-    </section>
+    <SectionProject :project-id="currentProject" />
   </main>
 </template>

@@ -2,15 +2,23 @@
 import { useProjectStore } from "@/entities/projects/model/project";
 import { storeToRefs } from "pinia";
 import ItemProject from "./ItemProject.vue";
-import FormProject from "./FormProject.vue";
+import { IProject } from "../model/types";
+import { watch } from "vue";
 
 const projeсtStore = useProjectStore();
 const { projects } = storeToRefs(projeсtStore);
-const { createProject } = projeсtStore;
+
+const emits = defineEmits<{ getId: [uuid: IProject["uuid"]] }>();
+
+watch([projects], () => {
+  if (projects.value.length !== 0) {
+    emits("getId", projects.value[0].uuid);
+  }
+});
 </script>
 <template>
   <section
-    v-if="projects.length > 0"
+    v-if="projects.length !== 0"
     class="flex w-full flex-col gap-4 pt-1"
   >
     <h2 class="text-label flex items-center justify-between">
@@ -22,9 +30,7 @@ const { createProject } = projeсtStore;
       v-for="project in projects"
       :key="project.uuid"
       :project
+      @click="emits('getId', project.uuid)"
     />
-  </section>
-  <section v-else>
-    <FormProject @submit="(val) => createProject(val)" />
   </section>
 </template>

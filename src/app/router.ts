@@ -2,7 +2,7 @@ import { createMemoryHistory, createRouter } from "vue-router";
 import { IconKey } from "@/shared/types/icons";
 import HomeView from "@/pages/HomeView.vue";
 import { Component } from "vue";
-import ProjectView from "@/pages/ProjectView.vue";
+import SettingsView from "@/pages/SettingsView.vue";
 
 interface AppRoute {
   path: string;
@@ -19,10 +19,10 @@ export const routes: AppRoute[] = [
     icon: "formatList",
   },
   {
-    path: "/projects",
-    component: ProjectView,
-    name: "Projects",
-    icon: "formatList",
+    path: "/settings",
+    component: SettingsView,
+    name: "Settings",
+    icon: "settings",
   },
 ];
 

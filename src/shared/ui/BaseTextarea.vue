@@ -8,9 +8,11 @@ interface Props {
   labelClass?: string;
   rootClass?: string;
   errorClass?: string;
+  descriptionClass?: string;
   name: string;
   error?: string;
   label?: string;
+  description?: string;
 }
 
 defineOptions({
@@ -38,24 +40,34 @@ const modelValue = computed({
     <label :class="labelClass" :for="name" v-if="label">{{
       label
     }}</label>
-    <!-- TODO: Собрать шорткат на этот инпут и сделать его в соответствии с дизайном -->
-
     <textarea
       v-model="modelValue"
       v-bind="textareaAttrs"
       type=""
-      class="block w-full resize-none rounded-md bg-gray-700 px-3.5
-        py-2 text-base text-white outline outline-1 outline-white/10
-        placeholder:text-gray-500 focus:outline-2
-        focus:-outline-offset-2 focus:outline-indigo-500"
-      :class="textareaClass"
+      class="input-base h-20 resize-none px-3 py-2"
+      :class="[
+        textareaClass,
+        {
+          [`shadow-focus border-red-500 shadow-red-200
+          focus-within:border-red-500 focus-within:outline-none`]:
+            error,
+        },
+      ]"
       :name
       :id="name"
       :aria-describedby="error ? `${name}-error` : undefined"
       :aria-invalid="error ? true : undefined"
     />
     <p
+      v-if="description"
+      class="text-caption text-xs"
+      :class="descriptionClass"
+    >
+      {{ description }}
+    </p>
+    <p
       v-if="error"
+      class="text-xs font-medium text-red-600"
       :class="errorClass"
       :id="`${name}-error`"
       aria-live="assertive"

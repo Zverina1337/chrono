@@ -1,13 +1,22 @@
 <script setup lang="ts" generic="T">
-import { computed, useAttrs } from "vue";
-import type { OptionHTMLAttributes, SelectHTMLAttributes } from "vue";
+import {
+  computed,
+  shallowRef,
+  useAttrs,
+  useTemplateRef,
+  watch,
+} from "vue";
+import type { SelectHTMLAttributes } from "vue";
+import { useClickOutside } from "../lib/useClickOutside";
 
-interface Option extends Omit<OptionHTMLAttributes, "value"> {
+interface Option {
+  label: string;
+  disabled?: boolean;
   value: T;
 }
 
 interface Props {
-  modelValue: T;
+  modelValue: Option;
   options: Array<Option>;
   selectClass?: string;
   labelClass?: string;
@@ -16,50 +25,142 @@ interface Props {
   name: string;
   error?: string;
   label?: string;
+  size?: "sm" | "md" | "lg";
 }
 
 defineOptions({
   inheritAttrs: false,
 });
 
-const props = defineProps<Props>();
-const emits = defineEmits<{ "update:modelValue": [value: T] }>();
-const {
-  class: rootClass,
-  style: rootStyle,
-  ...selectAttrs
-}: SelectHTMLAttributes = useAttrs();
+const props = withDefaults(defineProps<Props>(), {
+  size: "md",
+});
+const emits = defineEmits<{ "update:modelValue": [Option] }>();
+const attrs: SelectHTMLAttributes = useAttrs();
+
+const placeholder = computed(() => attrs.placeholder);
+const rootClass = computed(() => attrs.class);
+const rootStyle = computed(() => attrs.style);
 
 const modelValue = computed({
   get: () => props.modelValue,
-  set: (value) => emits("update:modelValue", value),
+  set: (option: Option) => {
+    emits("update:modelValue", option);
+  },
+});
+
+const isOpen = shallowRef(false);
+
+const toggleList = () => {
+  isOpen.value = !isOpen.value;
+};
+
+const changeValue = (index: number) => {
+  modelValue.value = props.options[index];
+  toggleList();
+};
+
+const root = useTemplateRef("root");
+
+const activeIndex = shallowRef(0);
+
+const incrementIndex = () => {
+  if (activeIndex.value < props.options.length - 1) {
+    activeIndex.value++;
+  }
+};
+
+const decrementIndex = () => {
+  if (activeIndex.value > 0) {
+    activeIndex.value--;
+  }
+};
+
+useClickOutside(root, () => (isOpen.value = false));
+
+const inputSizes = {
+  sm: "input-sm",
+  md: "input-md",
+  lg: "input-lg",
+};
+
+watch(isOpen, () => {
+  const currentIndex = props.options.findIndex(
+    (option) => option.value === modelValue.value.value,
+  );
+  activeIndex.value = currentIndex === -1 ? 0 : currentIndex;
+  console.log(activeIndex.value);
 });
 </script>
 
 <template>
-  <div :class="rootClass" :style="rootStyle">
-    <label :class="labelClass" :for="name" v-if="label">{{
-      label
-    }}</label>
-    <!-- TODO: Собрать шорткат на этот инпут и сделать его в соответствии с дизайном -->
-
-    <select
-      v-model="modelValue"
-      v-bind="selectAttrs"
-      :class="['select', selectClass]"
-      class="block w-full rounded-md bg-gray-700 px-3.5 py-2 text-base
-        text-white"
-      :name
-      :id="name"
-      :aria-describedby="error ? `${name}-error` : undefined"
-      :aria-invalid="error ? true : undefined"
+  <div
+    :class="rootClass"
+    :style="rootStyle"
+    class="flex w-full flex-col gap-1"
+    ref="root"
+  >
+    <label
+      :class="labelClass"
+      :for="name"
+      v-if="label"
+      class="text-input font-medium select-none"
     >
-      <option
-        v-for="(option, index) in options"
-        v-bind="options[index]"
-        :key="`${option.value}-${index}`"
+      {{ label }}
+    </label>
+    <!-- TODO: Собрать шорткат на этот инпут и сделать его в соответствии с дизайном -->
+    <div
+      tabindex="0"
+      class="input-base relative flex cursor-pointer items-center
+        justify-between"
+      :class="[inputSizes[size], { 'shadow-focus': isOpen }]"
+      @click="toggleList"
+      @keydown.esc.stop="isOpen = false"
+      @keydown.enter.stop="
+        isOpen ? changeValue(activeIndex) : toggleList()
+      "
+      @keydown.down.stop.prevent="incrementIndex"
+      @keydown.up.stop.prevent="decrementIndex"
+    >
+      <span v-if="modelValue.label">{{ modelValue.label }}</span>
+      <p class="text-sm text-black/50 select-none" v-else>
+        {{ placeholder }}
+      </p>
+      <div
+        v-if="isOpen"
+        role="listbox"
+        class="bg-surface-card absolute top-10 left-0 w-full
+          rounded-md p-1 shadow-lg transition-opacity select-none"
+      >
+        <p
+          v-for="(option, index) of options"
+          role="option"
+          :class="[
+            `text-input flex items-center rounded-md p-2 outline-none
+            hover:bg-black/5`,
+            {
+              [`bg-brand-50 hover:bg-brand-50 text-brand-500
+              font-medium`]: activeIndex === index,
+            },
+          ]"
+          @click.stop="changeValue(index)"
+        >
+          <span>{{ option.label }}</span>
+          <span
+            v-if="option.value === modelValue"
+            class="i-mdi:check ml-auto block h-3 w-3"
+          />
+        </p>
+      </div>
+      <div
+        role="combobox"
+        :class="[
+          'i-mdi:chevron-up ml-auto h-5 w-4 transition-transform',
+          { 'rotate-180': isOpen },
+        ]"
       />
-    </select>
+    </div>
+
     <p
       v-if="error"
       :class="errorClass"
@@ -70,70 +171,3 @@ const modelValue = computed({
     </p>
   </div>
 </template>
-
-<style scoped>
-.select {
-  appearance: base-select;
-}
-
-.select::placeholder {
-  color: #6b7280;
-}
-
-.select:focus-visible {
-  outline: 2px solid #6366f1;
-}
-
-.select:open {
-  outline: 2px solid #6366f1;
-}
-
-.select::picker-icon {
-  transition: transform 0.2s;
-  color: white;
-}
-.select:open::picker-icon {
-  transform: rotate(180deg);
-}
-.select > option {
-  padding: 0.5rem;
-}
-.select > option:hover {
-  background-color: #6366f1;
-}
-.select > option:checked {
-  background-color: #6366f1;
-}
-.select > option::checkmark {
-  display: none;
-}
-</style>
-<style>
-.select::picker(select) {
-  appearance: base-select;
-  background-color: #374151;
-  border-radius: 0.375rem;
-  border: 2px solid #6366f1;
-  margin: 0.5rem 0;
-  color: white;
-  position-try-fallbacks: none;
-}
-
-.select::picker(select) {
-  clip-path: inset(0 0 100% 0);
-  transition:
-    clip-path 0.25s ease,
-    display 0.25s allow-discrete,
-    overlay 0.25s allow-discrete;
-}
-
-.select:open::picker(select) {
-  clip-path: inset(0 0 0% 0 round 8px);
-}
-
-@starting-style {
-  .select:open::picker(select) {
-    clip-path: inset(0 0 100% 0 round 8px);
-  }
-}
-</style>

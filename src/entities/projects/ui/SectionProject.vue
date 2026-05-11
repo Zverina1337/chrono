@@ -11,8 +11,5 @@ const props = defineProps<Props>();
 onMounted(() => {});
 </script>
 <template>
-  <div>
-    {{ projectId }}
-  </div>
   <!-- TODO: Когда начнем делать страницу проектов, важно чтобы использовались дизайн токены здвеь -->
 </template>

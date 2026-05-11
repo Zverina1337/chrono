@@ -95,13 +95,13 @@ export default defineConfig({
       numeric: ['"Geist Mono"', "ui-monospace", "monospace"],
     },
     fontSize: {
-      xs: ["0.6875rem", { lineHeight: "1rem" }], // 11px, БЕЗ tracking
-      sm: ["0.8125rem", { lineHeight: "1.125rem" }], // 13px — дефолт
-      base: ["0.875rem", { lineHeight: "1.25rem" }], // 14px
-      md: ["0.9375rem", { lineHeight: "1.375rem" }], // 15px
-      lg: ["1.0625rem", { lineHeight: "1.5rem" }], // 17px
-      xl: ["1.25rem", { lineHeight: "1.75rem" }], // 20px
-      "2xl": ["1.5rem", { lineHeight: "2rem" }],
+      xs: ["0.6875rem", { "line-height": "1rem" }], // 11px, БЕЗ tracking
+      sm: ["0.8125rem", { "line-height": "1.125rem" }], // 13px — дефолт
+      base: ["0.875rem", { "line-height": "1.25rem" }], // 14px
+      md: ["0.9375rem", { "line-height": "1.375rem" }], // 15px
+      lg: ["1.0625rem", { "line-height": "1.5rem" }], // 17px
+      xl: ["1.25rem", { "line-height": "1.75rem" }], // 20px
+      "2xl": ["1.5rem", { "line-height": "2rem" }],
       clock: [
         "1.375rem",
         { lineHeight: "1.5rem", letterSpacing: "-0.01em" },
@@ -184,7 +184,7 @@ export default defineConfig({
     // ── Метки (теги) ────────────────────────────────────────────
     [
       "tag",
-      "inline-flex items-center px-2 h-tag-h rounded-md text-xs font-medium leading-none whitespace-nowrap",
+      "inline-flex items-center px-2 tag-h rounded-md text-xs font-medium leading-none whitespace-nowrap",
     ],
     ["tag-frontend", "tag bg-tag-frontend-bg text-tag-frontend-fg"],
     ["tag-backend", "tag bg-tag-backend-bg  text-tag-backend-fg"],
@@ -211,9 +211,15 @@ export default defineConfig({
     ["header-h", "h-[64px]"],
     ["task-row-h", "h-[44px]"],
     ["tag-h", "h-[20px]"],
+
     ["btn-sm-h", "h-[28px]"],
     ["btn-md-h", "h-[36px]"],
     ["btn-lg-h", "h-[40px]"],
+
+    ["input-sm-h", "h-[28px]"],
+    ["input-md-h", "h-[36px]"],
+    ["input-lg-h", "h-[40px]"],
+
     ["timer-h", "h-[48px]"],
     ["timer-w", "w-[320px]"],
 
@@ -222,13 +228,18 @@ export default defineConfig({
       "btn",
       "inline-flex items-center justify-center gap-1.5 font-medium rounded-md transition-colors duration-fast disabled:opacity-50 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:shadow-focus",
     ],
-    ["btn-sm", "btn h-btn-sm-h px-2.5 text-sm"],
-    ["btn-md", "btn h-btn-md-h px-3.5 text-sm"],
-    ["btn-lg", "btn h-btn-lg-h px-4 text-md"],
+    ["btn-sm", "btn btn-sm-h px-2.5 text-sm"],
+    ["btn-md", "btn btn-md-h px-3.5 text-sm"],
+    ["btn-lg", "btn btn-lg-h px-4 text-md"],
     [
       "btn-primary",
       "bg-brand-500 text-white hover:bg-brand-600 active:bg-brand-700 shadow-xs",
     ],
+    [
+      "btn-glass",
+      "bg-brand-50 text-brand-600 border-brand-300 border hover:bg-brand-100",
+    ],
+    ["btn-disabled", "bg-brand-500/50 text-white "],
     [
       "btn-secondary",
       "bg-surface-card text-ink-primary border border-border hover:bg-surface-hover",
@@ -256,20 +267,22 @@ export default defineConfig({
     // ── Поля ввода ─────────────────────────────────────────────
     [
       "input-base",
-      "h-btn-md-h px-3 text-sm bg-surface-card border border-border rounded-md text-ink-primary placeholder:text-ink-muted transition-colors duration-fast focus:outline-none focus:border-brand-400 focus:shadow-focus",
+      "outline-none px-3 text-sm transition-all w-full bg-surface-card border border-border rounded-md text-ink-primary placeholder:text-ink-muted focus-within:outline-none focus-within:border-brand-400 focus-within:shadow-focus [&:has(input:disabled)]:bg-surface-sidebar",
     ],
+    ["input-sm", "input-sm-h px-2.5 text-sm"],
+    ["input-md", "input-md-h px-3.5 text-sm"],
+    ["input-lg", "input-lg-h px-4 text-md"],
     ["input-search", "input-base pl-9 pr-12"],
 
     // ── Чекбокс (контейнер) ────────────────────────────────────
     [
       "checkbox",
-      "inline-flex items-center justify-center w-[18px] h-[18px] rounded border border-border-strong hover:border-brand-500 transition-colors duration-fast cursor-pointer flex-shrink-0",
+      "inline-flex items-center justify-center w-[18px] h-[18px] rounded border border-border-strong hover:border-brand-500 transition-colors cursor-pointer flex-shrink-0",
     ],
     [
       "checkbox-checked",
       "checkbox bg-brand-500 border-brand-500 text-white",
     ],
-
     // ── Сегментный переключатель (Список / Канбан) ─────────────
     [
       "segment",
@@ -287,7 +300,7 @@ export default defineConfig({
     // ── Строка задачи ──────────────────────────────────────────
     [
       "task-row",
-      "group flex items-center gap-3 h-task-row-h px-4 border-b border-border-subtle hover:bg-surface-hover transition-colors duration-fast",
+      "group flex items-center gap-3 h-task-row-h px-4 border-b border-border-subtle hover:bg-surface-hover transition-colors",
     ],
     ["task-row-active", "bg-surface-active"],
     ["task-row-done", "opacity-60 line-through decoration-ink-muted"],
@@ -295,7 +308,7 @@ export default defineConfig({
     // ── Пункты сайдбара ────────────────────────────────────────
     [
       "nav-item",
-      "flex items-center gap-2 h-9 px-3 rounded-md text-sm text-ink-secondary hover:bg-surface-card hover:text-ink-primary cursor-pointer transition-colors duration-fast",
+      "flex items-center gap-2 h-9 px-3 rounded-md text-sm text-ink-secondary hover:bg-surface-card hover:text-ink-primary cursor-pointer transition-colors",
     ],
     [
       "nav-item-active",
@@ -305,7 +318,7 @@ export default defineConfig({
     // ── Пункт тёмной навигации (узкая колонка слева) ───────────
     [
       "rail-item",
-      "flex items-center justify-center w-10 h-10 rounded-md text-ink-muted hover:text-ink-inverse hover:bg-white/5 cursor-pointer transition-colors duration-fast",
+      "flex items-center justify-center w-10 h-10 rounded-md text-ink-muted hover:text-ink-inverse hover:bg-white/5 cursor-pointer transition-colors",
     ],
     ["rail-item-active", "text-ink-inverse bg-white/10"],
 

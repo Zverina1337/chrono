@@ -3,11 +3,8 @@ import { onMounted, ref } from "vue";
 import { useProjectStore } from "@/entities/projects/model/project";
 import ListProject from "@/entities/projects/ui/ListProject.vue";
 import SectionProject from "@/entities/projects/ui/SectionProject.vue";
-const projectstore = useProjectStore();
 
-onMounted(() => {
-  projectstore.fetchProjects();
-});
+const projectstore = useProjectStore();
 
 const filters = ref([
   { name: "Сегодня", count: 3 },
@@ -24,12 +21,16 @@ const badges = ref([
 ]);
 
 const currentProject = ref();
+
+onMounted(() => {
+  projectstore.fetchProjects();
+});
 </script>
 <template>
-  <main class="flex h-screen gap-2">
+  <main class="flex h-screen">
     <aside
-      class="bg-surface-sidebar border-r-border sidebar-w relative
-        flex flex-col gap-2 border-r p-5"
+      class="bg-surface-sidebar border-r-border relative flex w-1/4
+        flex-col gap-2 border-r p-5"
     >
       <div class="border-b-border flex flex-col gap-4 border-b pb-6">
         <h2 class="text-label">Фильтры</h2>
@@ -62,6 +63,6 @@ const currentProject = ref();
         </div>
       </div>
     </aside>
-    <SectionProject :project-id="currentProject" />
+    <SectionProject :project="currentProject" />
   </main>
 </template>

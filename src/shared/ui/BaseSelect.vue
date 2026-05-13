@@ -89,7 +89,6 @@ watch(isOpen, () => {
     (option) => option.value === modelValue.value.value,
   );
   activeIndex.value = currentIndex === -1 ? 0 : currentIndex;
-  console.log(activeIndex.value);
 });
 </script>
 

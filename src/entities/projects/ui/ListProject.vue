@@ -8,11 +8,11 @@ import { watch } from "vue";
 const projeсtStore = useProjectStore();
 const { projects } = storeToRefs(projeсtStore);
 
-const emits = defineEmits<{ getId: [uuid: IProject["uuid"]] }>();
+const emits = defineEmits<{ getId: [uuid: IProject] }>();
 
 watch([projects], () => {
   if (projects.value.length !== 0) {
-    emits("getId", projects.value[0].uuid);
+    emits("getId", projects.value[0]);
   }
 });
 </script>
@@ -30,7 +30,7 @@ watch([projects], () => {
       v-for="project in projects"
       :key="project.uuid"
       :project
-      @click="emits('getId', project.uuid)"
+      @click="emits('getId', project)"
     />
   </section>
 </template>

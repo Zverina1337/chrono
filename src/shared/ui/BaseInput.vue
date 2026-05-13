@@ -34,11 +34,11 @@ const props = withDefaults(defineProps<Props>(), {
   size: "md",
 });
 const emits = defineEmits<{ "update:modelValue": [value: T] }>();
-const {
-  class: rootClass,
-  style: rootStyle,
-  ...inputAttrs
-}: InputHTMLAttributes = useAttrs();
+
+const attrs: InputHTMLAttributes = useAttrs();
+
+const rootClass = computed(() => attrs.class);
+const rootStyle = computed(() => attrs.style);
 
 const modelValue = computed({
   get: () => props.modelValue,
@@ -81,7 +81,6 @@ const inputSizes = {
       <slot name="left-icon"></slot>
       <input
         v-model="modelValue"
-        v-bind="inputAttrs"
         :type="type ?? 'text'"
         class="h-full w-full outline-none"
         :class="inputClass"
@@ -89,6 +88,7 @@ const inputSizes = {
         :id="name"
         :aria-describedby="error ? `${name}-error` : undefined"
         :aria-invalid="error ? true : undefined"
+        :="{ ...attrs }"
       />
       <slot name="right-icon"></slot>
     </div>

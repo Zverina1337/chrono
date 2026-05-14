@@ -60,7 +60,7 @@ const modelValue = computed({
     />
     <p
       v-if="description"
-      class="text-caption text-xs"
+      class="text-description text-xs"
       :class="descriptionClass"
     >
       {{ description }}

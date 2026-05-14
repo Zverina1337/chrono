@@ -4,7 +4,7 @@ import { icons } from "@/shared/types/icons";
 </script>
 
 <template>
-  <main class="flex w-full">
+  <main class="flex w-full font-sans">
     <aside
       class="nav-w bg-surface-nav relative flex flex-col items-center"
     >

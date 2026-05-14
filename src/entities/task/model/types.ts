@@ -1,14 +1,26 @@
 import * as z from "zod";
-import { TaskSchema, createTaskSchema } from "./validation";
+import { TaskSchema, CreateTaskSchema } from "./validation";
 
 export type ITask = z.infer<typeof TaskSchema>;
-export type ITaskCreate = z.infer<typeof createTaskSchema>;
+export type ITaskCreate = z.infer<typeof CreateTaskSchema>;
 
 export interface ITaskActions {
-  addTask: (projectUuid: ITask["projectUuid"], taskData: ITaskCreate) => void;
+  addTask: (
+    projectUuid: ITask["projectUuid"],
+    taskData: ITaskCreate,
+  ) => void;
   getTasks: (projectUuid: ITask["projectUuid"]) => ITask[];
-  deleteTask: (projectUuid: ITask["projectUuid"], uuid: ITask["uuid"]) => void;
-  moveTask: (task: ITask, toProjectUuid: ITask["projectUuid"]) => void;
+  deleteTask: (
+    projectUuid: ITask["projectUuid"],
+    uuid: ITask["uuid"],
+  ) => void;
+  moveTask: (
+    task: ITask,
+    toProjectUuid: ITask["projectUuid"],
+  ) => void;
   swapTask: (task: ITask, targetTask: ITask) => void;
-  getTask: (projectUuid: ITask["projectUuid"], uuid: ITask["uuid"]) => ITask | null;
+  getTask: (
+    projectUuid: ITask["projectUuid"],
+    uuid: ITask["uuid"],
+  ) => ITask | null;
 }

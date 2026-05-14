@@ -80,6 +80,7 @@ watch(isOpen, () => {
       v-model="value"
       name="search-input"
       placeholder="Поиск..."
+      input-class="bg-surface-sidebar shadow-sm rounded-lg"
       @click="toggleList()"
       @keydown.down.stop.prevent="incrementIndex"
       @keydown.up.stop.prevent="decrementIndex"

@@ -33,7 +33,7 @@ onMounted(() => {
         flex-col gap-2 border-r p-5"
     >
       <div class="border-b-border flex flex-col gap-4 border-b pb-6">
-        <h2 class="text-label">Фильтры</h2>
+        <h2 class="text-subheader">Фильтры</h2>
         <div class="flex flex-col gap-3">
           <p
             v-for="filter in filters"
@@ -51,7 +51,7 @@ onMounted(() => {
       </div>
       <ListProject @get-id="(uuid) => (currentProject = uuid)" />
       <div class="absolute bottom-4 flex flex-col gap-4">
-        <h2 class="text-label">Метки</h2>
+        <h2 class="text-subheader">Метки</h2>
         <div class="flex w-full flex-col gap-2">
           <p
             v-for="badge in badges"

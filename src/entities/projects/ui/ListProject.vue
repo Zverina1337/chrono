@@ -21,7 +21,7 @@ watch([projects], () => {
     v-if="projects.length !== 0"
     class="flex w-full flex-col gap-4 pt-1"
   >
-    <h2 class="text-label flex items-center justify-between">
+    <h2 class="text-subheader flex items-center justify-between">
       <span>Проекты</span>
       <!-- // TODO: Create project -->
       <span class="i-mdi-plus block h-4 w-4 text-black/60" />

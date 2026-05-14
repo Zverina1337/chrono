@@ -14,28 +14,26 @@ export default defineConfig({
     {
       getCSS: () => `
       /* ── Geist Sans ─────────────────────────────────────── */
-      @font-face { font-family: 'Geist'; font-style: normal; font-display: swap; font-weight: 100; src: url('/fonts/Geist-Thin.woff2')       format('woff2'); }
-      @font-face { font-family: 'Geist'; font-style: normal; font-display: swap; font-weight: 200; src: url('/fonts/Geist-UltraLight.woff2') format('woff2'); }
-      @font-face { font-family: 'Geist'; font-style: normal; font-display: swap; font-weight: 300; src: url('/fonts/Geist-Light.woff2')      format('woff2'); }
-      @font-face { font-family: 'Geist'; font-style: normal; font-display: swap; font-weight: 400; src: url('/fonts/Geist-Regular.woff2')    format('woff2'); }
-      @font-face { font-family: 'Geist'; font-style: normal; font-display: swap; font-weight: 500; src: url('/fonts/Geist-Medium.woff2')     format('woff2'); }
-      @font-face { font-family: 'Geist'; font-style: normal; font-display: swap; font-weight: 600; src: url('/fonts/Geist-SemiBold.woff2')   format('woff2'); }
-      @font-face { font-family: 'Geist'; font-style: normal; font-display: swap; font-weight: 700; src: url('/fonts/Geist-Bold.woff2')       format('woff2'); }
-      @font-face { font-family: 'Geist'; font-style: normal; font-display: swap; font-weight: 800; src: url('/fonts/Geist-Black.woff2')      format('woff2'); }
-      @font-face { font-family: 'Geist'; font-style: normal; font-display: swap; font-weight: 900; src: url('/fonts/Geist-UltraBlack.woff2') format('woff2'); }
+      @font-face { font-family: 'Geist'; font-style: normal; font-display: swap; font-weight: 100; src: url('/fonts/Geist-Thin.ttf')       format('truetype'); }
+      @font-face { font-family: 'Geist'; font-style: normal; font-display: swap; font-weight: 200; src: url('/fonts/Geist-ExtraLight.ttf') format('truetype'); }
+      @font-face { font-family: 'Geist'; font-style: normal; font-display: swap; font-weight: 300; src: url('/fonts/Geist-Light.ttf')      format('truetype'); }
+      @font-face { font-family: 'Geist'; font-style: normal; font-display: swap; font-weight: 400; src: url('/fonts/Geist-Regular.ttf')    format('truetype'); }
+      @font-face { font-family: 'Geist'; font-style: normal; font-display: swap; font-weight: 500; src: url('/fonts/Geist-Medium.ttf')     format('truetype'); }
+      @font-face { font-family: 'Geist'; font-style: normal; font-display: swap; font-weight: 600; src: url('/fonts/Geist-SemiBold.ttf')   format('truetype'); }
+      @font-face { font-family: 'Geist'; font-style: normal; font-display: swap; font-weight: 700; src: url('/fonts/Geist-Bold.ttf')       format('truetype'); }
+      @font-face { font-family: 'Geist'; font-style: normal; font-display: swap; font-weight: 800; src: url('/fonts/Geist-Black.ttf')      format('truetype'); }
+      @font-face { font-family: 'Geist'; font-style: normal; font-display: swap; font-weight: 900; src: url('/fonts/Geist-ExtraBlack.ttf') format('truetype'); }
 
       /* ── Geist Mono ─────────────────────────────────────── */
-      @font-face { font-family: 'Geist Mono'; font-style: normal; font-display: swap; font-weight: 100; src: url('/fonts/GeistMono-Thin.woff2')       format('woff2'); }
-      @font-face { font-family: 'Geist Mono'; font-style: normal; font-display: swap; font-weight: 200; src: url('/fonts/GeistMono-UltraLight.woff2') format('woff2'); }
-      @font-face { font-family: 'Geist Mono'; font-style: normal; font-display: swap; font-weight: 300; src: url('/fonts/GeistMono-Light.woff2')      format('woff2'); }
-      @font-face { font-family: 'Geist Mono'; font-style: normal; font-display: swap; font-weight: 400; src: url('/fonts/GeistMono-Regular.woff2')    format('woff2'); }
-      @font-face { font-family: 'Geist Mono'; font-style: normal; font-display: swap; font-weight: 500; src: url('/fonts/GeistMono-Medium.woff2')     format('woff2'); }
-      @font-face { font-family: 'Geist Mono'; font-style: normal; font-display: swap; font-weight: 600; src: url('/fonts/GeistMono-SemiBold.woff2')   format('woff2'); }
-      @font-face { font-family: 'Geist Mono'; font-style: normal; font-display: swap; font-weight: 700; src: url('/fonts/GeistMono-Bold.woff2')       format('woff2'); }
-      @font-face { font-family: 'Geist Mono'; font-style: normal; font-display: swap; font-weight: 800; src: url('/fonts/GeistMono-Black.woff2')      format('woff2'); }
-      @font-face { font-family: 'Geist Mono'; font-style: normal; font-display: swap; font-weight: 900; src: url('/fonts/GeistMono-UltraBlack.woff2') format('woff2'); }
-      
-    
+      @font-face { font-family: 'Geist Mono'; font-style: normal; font-display: swap; font-weight: 100; src: url('/fonts/GeistMono-Thin.ttf')       format('truetype'); }
+      @font-face { font-family: 'Geist Mono'; font-style: normal; font-display: swap; font-weight: 200; src: url('/fonts/GeistMono-ExtraLight.ttf') format('truetype'); }
+      @font-face { font-family: 'Geist Mono'; font-style: normal; font-display: swap; font-weight: 300; src: url('/fonts/GeistMono-Light.ttf')      format('truetype'); }
+      @font-face { font-family: 'Geist Mono'; font-style: normal; font-display: swap; font-weight: 400; src: url('/fonts/GeistMono-Regular.ttf')    format('truetype'); }
+      @font-face { font-family: 'Geist Mono'; font-style: normal; font-display: swap; font-weight: 500; src: url('/fonts/GeistMono-Medium.ttf')     format('truetype'); }
+      @font-face { font-family: 'Geist Mono'; font-style: normal; font-display: swap; font-weight: 600; src: url('/fonts/GeistMono-SemiBold.ttf')   format('truetype'); }
+      @font-face { font-family: 'Geist Mono'; font-style: normal; font-display: swap; font-weight: 700; src: url('/fonts/GeistMono-Bold.ttf')       format('truetype'); }
+      @font-face { font-family: 'Geist Mono'; font-style: normal; font-display: swap; font-weight: 800; src: url('/fonts/GeistMono-Black.ttf')      format('truetype'); }
+      @font-face { font-family: 'Geist Mono'; font-style: normal; font-display: swap; font-weight: 900; src: url('/fonts/GeistMono-ExtraBlack.ttf') format('truetype'); }
       `,
     },
   ],
@@ -55,12 +53,11 @@ export default defineConfig({
       },
       surface: {
         nav: "#131313", // тёмная вертикальная навигация (самая левая колонка)
-        sidebar: "#f4f4f5", // светлая вторая колонка с фильтрами/проектами
+        sidebar: "#f4f4f5",
         canvas: "#fafafa", // основной фон контентной области
         card: "#ffffff", // панели задач, поповеры, таймер
         hover: "#f4f4f5", // hover для строк и пунктов меню
         active: "#ecfdf5", // подсветка активной задачи (тонкий зелёный вош)
-        overlay: "rgba(15, 23, 42, 0.45)",
       },
       ink: {
         primary: "#18181b", // заголовки, активные пункты
@@ -137,48 +134,18 @@ export default defineConfig({
         "0 8px 24px -6px rgba(16, 24, 40, 0.20), 0 2px 6px -2px rgba(16, 24, 40, 0.08)",
       focus: "0 0 0 3px rgba(52, 211, 153, 0.35)",
     },
-    transitionDuration: {
-      fast: "150ms",
-    },
   },
   shortcuts: [
-    // ── Иерархия ──────────────────────────────────────────────────
-    [
-      "text-h1",
-      "text-xl font-semibold tracking-tight text-ink-primary",
-    ],
-    ["text-h2", "text-md font-semibold text-ink-primary"],
+    ["text-header", "text-md font-semibold text-ink-primary"],
 
-    // ── Тело UI (Geist Sans наследуется от body) ─────────────────
-    ["text-body", "text-md text-ink-primary"],
-    ["text-body-strong", "text-md font-medium text-ink-primary"],
-    ["text-body-muted", "text-md text-ink-tertiary"],
+    ["text-body", "text-sm text-ink-primary"],
+    ["text-body-strong", "text-sm font-medium text-ink-primary"],
+    ["text-body-muted", "text-sm text-ink-tertiary"],
 
-    // ── Подписи и метки ──────────────────────────────────────────
-    ["text-caption", "text-xs text-ink-tertiary"],
+    ["text-description", "text-xs text-ink-tertiary"],
     [
-      "text-label",
+      "text-subheader",
       "text-sm font-medium uppercase tracking-wider text-ink-muted",
-    ],
-    ["text-rail", "text-xs uppercase tracking-widest text-ink-muted"],
-
-    // ── Время задачи ─────────────────────────────────────────────
-    [
-      "text-time",
-      "text-sm font-medium tabular-nums text-ink-primary",
-    ],
-    ["text-time-muted", "text-sm tabular-nums text-ink-muted"],
-
-    // ── Часы таймера (Geist Mono) ────────────────────────────────
-    [
-      "text-clock",
-      "font-mono text-clock font-semibold tabular-nums tracking-tight text-ink-primary",
-    ],
-
-    // ── Счётчики и цифры в badge ─────────────────────────────────
-    [
-      "text-counter",
-      "text-xs font-medium tabular-nums text-ink-muted",
     ],
 
     // ── Метки (теги) ────────────────────────────────────────────
@@ -193,19 +160,11 @@ export default defineConfig({
     ["tag-bug", "tag bg-tag-bug-bg      text-tag-bug-fg"],
 
     // ── Контролы ─────────────────────────────────────────────────
-    ["text-tag", "text-xs font-medium leading-none"],
-    ["text-button", "text-sm font-medium"],
     [
       "text-input",
       "text-sm text-ink-primary placeholder:text-ink-muted",
     ],
-    ["text-kbd", "text-xs font-medium text-ink-muted"],
-
     // ── Зачёркнутые готовые задачи ───────────────────────────────
-    [
-      "text-strike",
-      "text-sm line-through decoration-ink-muted text-ink-muted",
-    ],
     ["nav-w", "w-[64px]"],
     ["sidebar-w", "w-[240px]"],
     ["header-h", "h-[64px]"],
